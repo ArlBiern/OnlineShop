@@ -1,0 +1,38 @@
+{
+  "name": "onlineshop",
+  "version": "1.0.0",
+  "description": "Online shop design based on the MERN stack",
+  "main": "server.js",
+  "scripts": {
+    "install:app": "npm install && npm run install:client",
+    "install:client": "cd client && npm install client",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kombajn27/OnlineShop.git"
+  },
+  "keywords": [
+    "Online shop",
+    "e-commerce",
+    "MERN"
+  ],
+  "author": "FreeFrogs, Kombajn27",
+  "license": "ISC",
+  "homepage": "https://github.com/Kombajn27/OnlineShop#readme",
+  "dependencies": {
+    "@hapi/joi": "^16.1.8",
+    "concurrently": "^5.0.2",
+    "config": "^3.2.4",
+    "debug": "^4.1.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.8.3",
+    "morgan": "^1.9.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
