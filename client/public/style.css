@@ -37,5 +37,18 @@ body {
 
 .container {
   width: 90%;
+  min-height: 50vh;
+  padding: 1%;
   margin: 0 auto;
+}
+
+a {
+  margin: 3% 0.5%;
+  text-transform: uppercase;
+  color: var(--main_font_color);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--details);
 }
