@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Navigation from './Navigation';
 import Footer from './Footer';
 import AboutUs from './nav/AboutUs';
+import Cart from './nav/Cart';
 import Contact from './nav/Contact';
 import Home from './nav/Home';
 import Login from './nav/Login';
@@ -14,6 +15,7 @@ import Privacy from './footer/Privacy';
 import Regulations from './footer/Regulations';
 import Warranty from './footer/Warranty';
 import PageNotFound from './PageNotFound';
+import '../styles/App.css';
 
 function App() {
   return (
@@ -28,6 +30,7 @@ function App() {
             <Route path="/services" exact component={Services} />
             <Route path="/contact" exact component={Contact} />
             <Route path="/registration" exact component={Registration} />
+            <Route path="/cart" exact component={Cart} />
             <Route path="/login" exact component={Login} />
             <Route path="/delivery" exact component={Delivery} />
             <Route path="/warranty" exact component={Warranty} />

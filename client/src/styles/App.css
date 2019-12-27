@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap');
 
 /* --General-- */
 :root {
@@ -32,7 +32,7 @@ body {
   max-width: 1600px;
   width: 90%;
   margin: 2% auto 0;
-  padding: 1%;
+  padding: 2% 1%;
 }
 
 .container {
@@ -43,12 +43,12 @@ body {
 }
 
 a {
-  margin: 3% 0.5%;
   text-transform: uppercase;
   color: var(--main_font_color);
   text-decoration: none;
+  font-weight: 600;
 }
 
-a:hover {
-  color: var(--details);
+ul {
+  list-style: none;
 }
