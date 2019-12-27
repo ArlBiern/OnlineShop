@@ -5,9 +5,12 @@ const dbDebug = require('debug')('app:db');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const config = require('config');
-const home = require('./routes/home');
+const cors = require('cors');
 
 const app = express();
+
+const home = require('./routes/home');
+const user = require('./routes/user');
 
 const connectionString = `mongodb://${config.get('db.user')}:${config.get('db.password')}@${config.get('db.address')}/${config.get('db.name')}`;
 
@@ -25,14 +28,18 @@ if (app.get('env') === 'development') {
   basicDebug('Morgan enabled...')
 }
 
-/*
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({
   extended: true,
 }));
-*/
 
+
+// Test route
 app.use('/', home);
+
+// User registration 
+app.use('/registration', user)
 
 const port = process.env.PORT || 5000;
 

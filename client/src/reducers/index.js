@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux';
-
-const testReducer = () => [{ test: 'This is my test string' }];
+import { reducer as formReducer } from 'redux-form';
 
 export default combineReducers({
-  test: testReducer,
+  form: formReducer
 });
