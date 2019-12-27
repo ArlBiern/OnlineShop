@@ -1,0 +1,89 @@
+.nav_box {
+  width: 80%;
+}
+
+nav, nav ul {
+  display: flex;
+  align-items: center;
+}
+
+nav {
+  padding: 0 1%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav ul {
+  justify-content: flex-end;
+}
+
+.logo, nav ul * {
+  transition: all 0.5s ease-in-out;
+}
+
+nav ul li {
+  padding: 1%;
+  margin: 0.5% 0;
+  min-width: 100px;
+}
+
+nav ul a {
+  opacity: 0.5;
+  position: relative;
+  padding: 7px 0;
+}
+
+nav ul a:hover {
+  opacity: 1;
+}
+
+nav ul a:before {
+  content: '';
+  position: absolute;
+  transition: all 0.4s ease;
+  top: 25%;
+  bottom: 25%;
+  left: -5%;
+  right: -5%;
+  border-top: 1px solid var(--details);
+  border-bottom: 1px solid var(--details);
+  opacity: 0;
+}
+
+nav ul a:hover:before {
+  top: 0;
+  bottom: 0;
+  opacity: 0.5;
+}
+
+.logo {
+  opacity: 0.5;
+  border-right: 1px solid transparent;
+}
+
+.logo:hover {
+  opacity: 1;
+  border-radius: 50%;
+  border-right: 1px solid var(--details);
+}
+
+.cart {
+  opacity: 1;
+}
+
+.cart:hover:before {
+  top: -50%;
+  bottom: 10%;
+  border-radius: 50%;
+}
+
+.cart img {
+  max-height: 2em;
+  padding: 1%;
+}
+
+nav ul li span {
+  font-weight: 600;
+  padding-left: 10px;
+}
+
