@@ -28,6 +28,10 @@ if (app.get('env') === 'development') {
   basicDebug('Morgan enabled...')
 }
 
+//Seed products in databease
+//const seedProducts = require('./seeds/products');
+//seedProducts();
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({
