@@ -11,6 +11,7 @@ const app = express();
 
 const home = require('./routes/home');
 const user = require('./routes/user');
+const products = require('./routes/product');
 
 const connectionString = `mongodb://${config.get('db.user')}:${config.get('db.password')}@${config.get('db.address')}/${config.get('db.name')}`;
 
@@ -43,7 +44,10 @@ app.use(express.urlencoded({
 app.use('/', home);
 
 // User registration 
-app.use('/registration', user)
+app.use('/registration', user);
+
+// Products
+app.use('/products', products);
 
 const port = process.env.PORT || 5000;
 
