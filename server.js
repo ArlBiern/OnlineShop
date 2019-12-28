@@ -11,12 +11,14 @@ const app = express();
 
 const home = require('./routes/home');
 const user = require('./routes/user');
+const login = require('./routes/login');
 
 const connectionString = `mongodb://${config.get('db.user')}:${config.get('db.password')}@${config.get('db.address')}/${config.get('db.name')}`;
 
 mongoose.connect(connectionString, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true
   })
   .then(() => dbDebug('Connected to MongoDB...'))
   .catch((err) => {
@@ -34,12 +36,13 @@ app.use(express.urlencoded({
   extended: true,
 }));
 
-
 // Test route
 app.use('/', home);
 
 // User registration 
-app.use('/registration', user)
+app.use('/registration', user); // rejestracja użytkownika
+app.use('/login', login); // logowanie użytkownika
+app.use('/login/user', login); // do weryfikacji czy użytkonik jest zalogowany (Brad tak robił)
 
 const port = process.env.PORT || 5000;
 

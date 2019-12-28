@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Navigation from './Navigation';
 import Footer from './Footer';
@@ -15,11 +16,17 @@ import Privacy from './footer/Privacy';
 import Regulations from './footer/Regulations';
 import Warranty from './footer/Warranty';
 import PageNotFound from './PageNotFound';
+import { loadUser } from '../actions/authActions';
 import '../styles/App.css';
 
-function App() {
-  return (
-    <div className="App">
+class App extends React.Component {
+  componentDidMount() {
+    this.props.dispatch(loadUser());
+  }
+
+  render () {
+    return (
+      <div className="App">
       <BrowserRouter>
         <div>
           <Navigation />
@@ -41,8 +48,15 @@ function App() {
           <Footer />
         </div>
       </BrowserRouter>
-    </div>
-  );
+      </div>
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    state: state
+  }
+}
+
+export default connect(mapStateToProps)(App);

@@ -15,7 +15,7 @@ class Registration extends React.Component {
     }
   }
 
-  renderInput = ({ input, placeholder, type, meta}) => {
+  renderInput = ({ input, placeholder, type, meta }) => {
     return (
       <div className="input_field">
         {this.renderError(meta)}
@@ -30,12 +30,14 @@ class Registration extends React.Component {
   }
 
   onSubmit = formValues => {
-    this.props.createUser(formValues);
+    return this.props.createUser(formValues)
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
   }
 
   render() {
     return (
-      <div className="container">
+      <div className="form_container">
         <h2>Rejestarcja</h2>
         <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="registration_form">
           <div>
@@ -146,7 +148,7 @@ const validate = formValues => {
     errors.email = 'E-mail powinien być dłuższy niż 6 znaków';
   } else if (formValues.email.length > 60) {
     errors.email = 'E-mail powinien być krótszy niż 60 znaków';
-  } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(formValues.email)) {
+  } else if (!/^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/.test(formValues.email)) {
     errors.email = 'Niepoprawny adres e-mail'
   }
 
