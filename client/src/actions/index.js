@@ -1,6 +1,7 @@
 import streams from '../apis/streams';
 import { REGISTER_USER } from './types';
 
+
 export const createUser = formValues => async dispatch => {
   streams
     .post('/registration', formValues)
@@ -12,4 +13,9 @@ export const createUser = formValues => async dispatch => {
     }
     )
     .catch( err => console.log(err));
+};
+
+export const fetchProducts = () => async dispatch => {
+  const response = await streams.get('/products');
+  dispatch({ type: 'FETCH_PRODUCTS', payload: response.data });
 };

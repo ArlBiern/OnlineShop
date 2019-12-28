@@ -1,0 +1,40 @@
+.button_box, .products_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.product_box {
+  width: 30%;
+  text-align: center;
+  margin: 1% 1% 2%;
+  padding: 1% 2%;
+  box-shadow: 0 0 5px var(--main_background);
+}
+
+.product_img {
+  width: 100%;
+  height: auto;
+  margin: 3% 0;
+  padding: 10px;
+  border: 1px solid var(--details);
+}
+
+.product_cart {
+  transition: all 0.4s ease;
+  padding: 15px;
+  border-left: 1px solid transparent;
+  opacity: 0.5;
+}
+
+.product_cart:hover {
+  opacity: 1;
+  border-left: 1px solid var(--details);
+  border-radius: 50%;
+}
+
+.product_box p {
+  font-weight: 600;
+  font-size: 24px;
+}
