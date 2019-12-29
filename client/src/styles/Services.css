@@ -1,0 +1,137 @@
+/* ===== 3D GALLERY ===== */
+
+/* === Main container === */
+
+.gallery-3d {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  height: auto;
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+
+.gallery-3d-cnt {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* === Images section === */
+
+.gallery-3d-images {
+  display: flex;
+  align-items: center;
+  height: 75vh;
+  width: 90%;
+  perspective: 2000px;
+}
+
+.gallery-3d-previous, .gallery-3d-next {
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
+  width: 30px;
+  background-image: linear-gradient(#222, rgb(133, 133, 245), #222);
+  border: none;
+  height: 30%;
+  position: relative;
+  z-index: 2;
+}
+
+.gallery-3d-previous:hover, .gallery-3d-next:hover {
+  border: 1px solid rgb(133, 133, 245);
+}
+
+.gallery-3d-previous:active, .gallery-3d-next:active {
+  color: #fff;
+}
+
+.gallery-3d-elements {
+  margin: 0 auto;
+  position: relative;
+  width: 85%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform-style: preserve-3d;
+  background-position: center;
+  background-size: cover;
+  transition: 1s all ease-in-out;
+}
+
+.gallery-3d-element {
+  position: relative;
+  z-index: 1;
+  width: 65%;
+  height: 65%;
+  background-color: rgba(40, 180, 100, 0.5);
+  position: absolute;
+  font-size: 16px;
+  text-align: center;
+  transition: 1.2s ease-in-out;
+  border-radius: 10px;
+
+}
+
+.gallery-3d-element:not(.active) {
+  opacity: 0.6;
+  filter: sepia(100%);
+}
+
+.gallery-3d-element .element-text {
+  display: none;
+}
+
+.gallery-3d-element .element-title {
+  display: none;
+}
+
+.gallery-3d-element .element-price {
+  display: none;
+}
+
+.game_link {
+  color: blue;
+  backface-visibility: hidden;
+  font-size: 25px;
+  text-decoration: none;
+  background-color: #fff;
+  padding: 5px 10px;
+  border-radius: 13px;
+}
+
+/* === Details/description section === */
+
+.gallery-3d-element-details {
+  border: 2px solid rgb(133, 133, 245);
+  box-shadow: 5px 5px 5px #000;
+  background: rgba(133, 133, 245, 0.25);
+  width: 80%;
+  padding: 20px;
+  margin: 2vh;
+  color: #fff;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.gallery-3d-title {
+  margin-bottom: 10px;
+  font-size: 24px;
+}
+
+.gallery-3d-text {
+  font-size: 18px;
+}
+
+.gallery-3d-price {
+  margin-top: 20px;
+  font-size: 18px;
+}
