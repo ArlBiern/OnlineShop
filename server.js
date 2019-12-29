@@ -11,6 +11,7 @@ const app = express();
 
 const user = require('./routes/user');
 const login = require('./routes/login');
+const products = require('./routes/product');
 
 const connectionString = `mongodb://${config.get('db.user')}:${config.get('db.password')}@${config.get('db.address')}/${config.get('db.name')}`;
 
@@ -29,6 +30,10 @@ if (app.get('env') === 'development') {
   basicDebug('Morgan enabled...')
 }
 
+//Seed products in databease
+//const seedProducts = require('./seeds/products');
+//seedProducts();
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({
@@ -39,6 +44,9 @@ app.use(express.urlencoded({
 app.use('/registration', user); // rejestracja użytkownika
 app.use('/login', login); // logowanie użytkownika
 app.use('/login/user', login); // do weryfikacji czy użytkonik jest zalogowany (czy posiada token)
+
+// Products
+app.use('/products', products);
 
 const port = process.env.PORT || 5000;
 
