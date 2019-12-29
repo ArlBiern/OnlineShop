@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import '../styles/Footer.css';
 
 const Footer = () => {
   return (
     <footer>
-      <p>Copyright 2019 ThinkTree</p>
+      <p>Copyright 2020 ThinkTree <img src="/img/logo_xs.png" alt="" /></p>
       <div>
         <Link to="/delivery">Dostawa</Link>
         <Link to="/warranty">Gwarancja</Link>
