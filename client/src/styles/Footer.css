@@ -1,0 +1,36 @@
+footer {
+  width: 90%;
+  margin: 1% auto;
+  padding-top: 1%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--details);
+  font-size: 14px;
+}
+
+footer img {
+  height: 20px;
+  width: auto;
+}
+
+footer a {
+  margin: 0 1%;
+  opacity: 0.5;
+  transition: all 0.3s ease;
+}
+
+footer a:hover {
+  color: var(--details);
+  opacity: 1;
+}
+
+footer p {
+  width: 30%;
+}
+
+footer div {
+  text-align: end;
+  width: 60%;
+}

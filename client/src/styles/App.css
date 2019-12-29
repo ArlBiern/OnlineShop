@@ -60,10 +60,16 @@ h3 {
   margin: 0 auto;
 }
 
-a {
+a, button {
   text-transform: uppercase;
   color: var(--main_font_color);
   text-decoration: none;
+}
+
+button {
+  outline: none;
+  border: none;
+  cursor: pointer;
 }
 
 ul {
@@ -82,6 +88,6 @@ ul {
 
 .main_button:hover {
   background-color: var(--details);
-  color: var(--main_background);
+  color: var(--dark_shadow);
   font-weight: 600;
 }
