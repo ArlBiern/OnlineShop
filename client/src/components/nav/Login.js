@@ -2,6 +2,7 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { loginUser } from '../../actions/authActions';
+import '../../styles/Forms.css';
 
 class Login extends React.Component {
   state = { alertMsg: null }
@@ -52,9 +53,9 @@ class Login extends React.Component {
   
   render() {
     return (
-      <div className="form_container">
-        <h2>Logowanie</h2>
-        <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="registration_form">
+      <div className="container">
+        <h1>Logowanie</h1>
+        <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="user_form">
           <div>
             <Field
               name="email"
@@ -72,11 +73,11 @@ class Login extends React.Component {
             />
           </div>
           <div>
-            <button type="submit">
+            <button type="submit" className="main_button">
               Zaloguj
             </button>
           </div>
-          <div className="alert_box">
+          <div>
             { this.state.alertMsg ? <p>{this.state.alertMsg}</p> : null }
           </div>
         </form>
