@@ -18,7 +18,7 @@ class Shop extends React.Component {
             <img className="product_img" src={product.photo} alt={product.name} />
             <p>{product.price} zł</p>
             <div className="button_box">
-              <a className="main_button" href="#">Zobacz</a>
+              <Link to={`/products/${product._id}`} className="main_button">Zobacz</Link>
               <Link to="/cart" className="product_cart"><img src="/img/cart.png" alt="ikona koszyk" /></Link>
             </div>
           </div>
