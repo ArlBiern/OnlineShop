@@ -15,6 +15,7 @@ import Privacy from './footer/Privacy';
 import Regulations from './footer/Regulations';
 import Warranty from './footer/Warranty';
 import PageNotFound from './PageNotFound';
+import Product from './Product';
 import '../styles/App.css';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
             <Route path="/" exact component={Home} />
             <Route path="/aboutUs" exact component={AboutUs} />
             <Route path="/products" exact component={Shop} />
+            <Route path="/products/:id" exact component={Product} />
             <Route path="/services" exact component={Services} />
             <Route path="/contact" exact component={Contact} />
             <Route path="/registration" exact component={Registration} />
