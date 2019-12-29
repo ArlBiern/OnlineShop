@@ -1,18 +1,18 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const router = express.Router();
-const { User, validateUser } = require('../models/user');
+const { User, validateUserRegistration } = require('../models/user');
 
 // Register new user
 router.post('/', async (req, res) => {
-  // Validate the input
-  const { error } = validateUser(req.body);
+  // Validate the input - maybe not necessary, redux-form does it
+  const { error } = validateUserRegistration(req.body);
   if (error) {
     const errorArray = [];
     error.details.forEach(detail => errorArray.push(detail.message));
     return res.status(400).send(errorArray);
   }
-  // Checking whether user is already registered
+  // Checking whether user is already registered - you must add an error information!!!
   let user = await User.findOne({ email: req.body.email });
   if (user) return res.status(400).send('Jesteś już zarejestrowany na naszej stronie');
 
@@ -34,7 +34,14 @@ router.post('/', async (req, res) => {
 
   await user.save();
 
-  res.status(200).send(user);
+  //const token = user.generateAuthToken();
+
+  //res.header('x-auth-token', token).send(user);
+
+  res.status(200).send({
+    name: user.name
+  })
+
 });
 
 module.exports = router;

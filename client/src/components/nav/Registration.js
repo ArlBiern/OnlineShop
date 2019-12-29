@@ -1,9 +1,10 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import { createUser } from '../../actions';
+import { registerUser } from '../../actions/authActions';
 
 class Registration extends React.Component {
+  state = { alertMsg: null}
 
   renderError({ error, touched }) {
     if (touched && error) {
@@ -15,7 +16,7 @@ class Registration extends React.Component {
     }
   }
 
-  renderInput = ({ input, placeholder, type, meta}) => {
+  renderInput = ({ input, placeholder, type, meta }) => {
     return (
       <div className="input_field">
         {this.renderError(meta)}
@@ -28,14 +29,28 @@ class Registration extends React.Component {
       </div>
     )
   }
-
+ 
   onSubmit = formValues => {
-    this.props.createUser(formValues);
+    this.props.registerUser(formValues);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { appErrors, didRegister } = this.props;
+    
+    if (appErrors !== prevProps.appErrors) {
+      if (appErrors.id === 'REGISTER_FAIL') {
+        this.setState({alertMsg: appErrors.msg})
+      }
+    } 
+
+    if (didRegister) {
+      this.props.history.push('/login')
+    }
   }
 
   render() {
     return (
-      <div className="container">
+      <div className="form_container">
         <h2>Rejestarcja</h2>
         <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="registration_form">
           <div>
@@ -112,10 +127,13 @@ class Registration extends React.Component {
           </div>
           <div>
             <button type="submit">
-              Submit
+              Zarejestruj
             </button>
           </div>
         </form>
+        <div className="alert_box">
+          { this.state.alertMsg ? <p>{this.state.alertMsg}</p> : null }
+        </div>
       </div>
     )
   }
@@ -146,7 +164,7 @@ const validate = formValues => {
     errors.email = 'E-mail powinien być dłuższy niż 6 znaków';
   } else if (formValues.email.length > 60) {
     errors.email = 'E-mail powinien być krótszy niż 60 znaków';
-  } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(formValues.email)) {
+  } else if (!/^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/.test(formValues.email)) {
     errors.email = 'Niepoprawny adres e-mail'
   }
 
@@ -196,12 +214,19 @@ const validate = formValues => {
     errors.repeat_password = 'Brak zgodości haseł';
   }
 
-  return errors
+  return errors;
 }
+
+const mapStateToProps = state => {
+  return {
+    didRegister: state.auth.didRegister,
+    appErrors: state.error
+  }
+};
 
 const formWrapped = reduxForm({
   form: 'userRegistration',
   validate
 })(Registration);
 
-export default connect(null, { createUser })(formWrapped);
+export default connect(mapStateToProps, { registerUser })(formWrapped);
