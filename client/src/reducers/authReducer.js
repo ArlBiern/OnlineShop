@@ -13,7 +13,8 @@ const initialState = {
   token: localStorage.getItem('token'),
   isAuthenticated: null, 
   isLoading: false, 
-  user: null
+  user: null, 
+  didRegister: false
 };
 
 export default function(state = initialState, action) {
@@ -31,8 +32,6 @@ export default function(state = initialState, action) {
         user: action.payload
       };
     case LOGIN_SUCCESS:
-    case REGISTER_SUCCESS:
-      // sprawdź póżniej czy token nie można po prostu w state przechowywać!!!
       localStorage.setItem('token', action.payload.token);
       return {
         ...state, 
@@ -40,17 +39,23 @@ export default function(state = initialState, action) {
         isAuthenticated: true, 
         isLoading: false
       };
+    case REGISTER_SUCCESS:
+      return {
+        ...state, 
+        didRegister: true
+      }
     case AUTH_ERROR:
     case LOGIN_FAIL:
     case LOGOUT_SUCCESS:
     case REGISTER_FAIL:
-      localStorage.removeItem('token'); // sprwadź czy zapisuje się w localStorage!!!!
+      localStorage.removeItem('token'); 
       return {
         ...state, 
         token: null, 
         isAuthenticated: false, 
         isLoading: false,
-        user: null
+        user: null, 
+        didRegister: false
       } 
     default:
       return state

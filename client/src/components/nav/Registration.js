@@ -1,9 +1,10 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import { createUser } from '../../actions';
+import { registerUser } from '../../actions/authActions';
 
 class Registration extends React.Component {
+  state = { alertMsg: null}
 
   renderError({ error, touched }) {
     if (touched && error) {
@@ -28,11 +29,23 @@ class Registration extends React.Component {
       </div>
     )
   }
-
+ 
   onSubmit = formValues => {
-    return this.props.createUser(formValues)
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
+    this.props.registerUser(formValues);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { appErrors, didRegister } = this.props;
+    
+    if (appErrors !== prevProps.appErrors) {
+      if (appErrors.id === 'REGISTER_FAIL') {
+        this.setState({alertMsg: appErrors.msg})
+      }
+    } 
+
+    if (didRegister) {
+      this.props.history.push('/login')
+    }
   }
 
   render() {
@@ -114,10 +127,13 @@ class Registration extends React.Component {
           </div>
           <div>
             <button type="submit">
-              Submit
+              Zarejestruj
             </button>
           </div>
         </form>
+        <div className="alert_box">
+          { this.state.alertMsg ? <p>{this.state.alertMsg}</p> : null }
+        </div>
       </div>
     )
   }
@@ -198,12 +214,19 @@ const validate = formValues => {
     errors.repeat_password = 'Brak zgodości haseł';
   }
 
-  return errors
+  return errors;
 }
+
+const mapStateToProps = state => {
+  return {
+    didRegister: state.auth.didRegister,
+    appErrors: state.error
+  }
+};
 
 const formWrapped = reduxForm({
   form: 'userRegistration',
   validate
 })(Registration);
 
-export default connect(null, { createUser })(formWrapped);
+export default connect(mapStateToProps, { registerUser })(formWrapped);

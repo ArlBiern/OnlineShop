@@ -2,7 +2,7 @@ export const tokenConfig = getState => {
   // get token from store
   const token = getState().auth.token;
 
-  // Add token to header - popracuj jeszcze na tym!!!
+  // Add token to header - check whether this will be needed 
   const config = {
     headers: {
       "Content-type": "application/json"

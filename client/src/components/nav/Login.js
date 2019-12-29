@@ -1,31 +1,10 @@
 import React from 'react';
-import { Field, reduxForm, SubmissionError } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import { loginUser } from '../../actions';
+import { loginUser } from '../../actions/authActions';
 
-/*
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
-
-function submit(values) {
-  return sleep(1000).then(() => {
-    // simulate server latency
-    if (!['john', 'paul', 'george', 'ringo'].includes(values.username)) {
-      throw new SubmissionError({
-        username: 'User does not exist',
-        _error: 'Login failed!'
-      })
-    } else if (values.password !== 'redux-form') {
-      throw new SubmissionError({
-        password: 'Wrong password',
-        _error: 'Login failed!'
-      })
-    } else {
-      window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`)
-    }
-  })
-}
-*/
 class Login extends React.Component {
+  state = { alertMsg: null }
 
   renderError({ error, touched }) {
     if (touched && error) {
@@ -52,26 +31,25 @@ class Login extends React.Component {
   }
 
   onSubmit = formValues => {
-    /* let result = this.props.loginUser(formValues);
-    result
-      .then(() => {
-        if (!true) {
-          throw new SubmissionError({
-            email: 'User does not exist'
-          }) 
-        } else if (true) {
-          throw new SubmissionError({
-            password: 'Wrong password'
-        })}
-      })
-      .catch(err => console.log(err)); */
-
-    /* return this.props.loginUser(formValues)
-      .then(payload => console.log(payload))
-      .catch( error => console.log(error)); */
     this.props.loginUser(formValues);
   }
 
+  componentDidUpdate(prevProps) {
+    const { appErrors, isAuthenticated } = this.props;
+
+    if (appErrors !== prevProps.appErrors) {
+      if (appErrors.id === 'LOGIN_FAIL') {
+        this.setState({ alertMsg: appErrors.msg.msg })
+      }
+    }
+
+    if (isAuthenticated !== prevProps.isAuthenticated) {
+      if (isAuthenticated) {
+        this.props.history.push('/') 
+      }
+    }
+  }
+  
   render() {
     return (
       <div className="form_container">
@@ -95,8 +73,11 @@ class Login extends React.Component {
           </div>
           <div>
             <button type="submit">
-              Submit
+              Zaloguj
             </button>
+          </div>
+          <div className="alert_box">
+            { this.state.alertMsg ? <p>{this.state.alertMsg}</p> : null }
           </div>
         </form>
       </div>
@@ -117,7 +98,6 @@ const validate = formValues => {
     errors.email = 'Niepoprawny adres e-mail'
   }
 
-
   if (!formValues.password) {
     errors.password = 'Proszę wprowadź hasło';
   } else if (formValues.password.length < 8) {
@@ -131,9 +111,16 @@ const validate = formValues => {
   return errors
 }
 
+const mapStateToProps = state => {
+  return {
+    appErrors: state.error,
+    isAuthenticated: state.auth.isAuthenticated
+  }
+};
+
 const formWrapped = reduxForm({
   form: 'userLogin',
   validate
 })(Login);
 
-export default connect(null, { loginUser })(formWrapped);
+export default connect(mapStateToProps, { loginUser })(formWrapped);

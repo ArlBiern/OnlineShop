@@ -9,7 +9,6 @@ const cors = require('cors');
 
 const app = express();
 
-const home = require('./routes/home');
 const user = require('./routes/user');
 const login = require('./routes/login');
 
@@ -36,13 +35,10 @@ app.use(express.urlencoded({
   extended: true,
 }));
 
-// Test route
-app.use('/', home);
-
 // User registration 
 app.use('/registration', user); // rejestracja użytkownika
 app.use('/login', login); // logowanie użytkownika
-app.use('/login/user', login); // do weryfikacji czy użytkonik jest zalogowany (Brad tak robił)
+app.use('/login/user', login); // do weryfikacji czy użytkonik jest zalogowany (czy posiada token)
 
 const port = process.env.PORT || 5000;
 

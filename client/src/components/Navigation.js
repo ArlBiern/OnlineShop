@@ -1,12 +1,16 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import '../styles/Navigation.css'
+import '../styles/Navigation.css';
+import { logoutUser } from '../actions/authActions';
 
 class Navigation extends React.Component {
-  state = {user: null};
+  handleLogout = () => {
+    this.props.logoutUser();
+  }
 
   renderPersonalizedNav() {
-    if (this.state.user === null) {
+    if (!this.props.isAuthenticated) {
       return (
         <ul>
           <li><Link to="/registration">Rejestracja</Link></li>
@@ -16,13 +20,13 @@ class Navigation extends React.Component {
     } else {
       return (
         <ul>
-          <li>Witaj <span>{this.state.user}</span></li>
+          <li>Witaj <span>{this.props.user.name}</span></li>
           <li><Link to="/cart" className="cart"><img src="/img/cart.png" alt="ikona koszyk" /></Link></li>
-          <li><Link to="/login">Wyloguj</Link></li>
+          <li><Link to="/" onClick={this.handleLogout}>Wyloguj</Link></li>
         </ul>
       );
     }
-  }
+  };
 
   render() {
     return (
@@ -45,4 +49,11 @@ class Navigation extends React.Component {
   };
 };
 
-export default Navigation;
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user,
+    isAuthenticated: state.auth.isAuthenticated
+  }
+}
+
+export default connect(mapStateToProps, { logoutUser })(Navigation);
