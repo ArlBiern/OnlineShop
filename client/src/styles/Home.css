@@ -1,0 +1,62 @@
+.home {
+  width: 80%;
+  padding: 4% 20%;
+  margin: 4% auto;
+  box-shadow: 0 0 10px var(--main_background);
+  position: relative;
+}
+
+.home img {
+  padding: 5px;
+  height: auto;
+  border: 1px solid var(--details);
+  position: absolute;
+}
+
+.home img:first-of-type {
+  top: 3%;
+  left: -10%;
+  width: 40%;
+}
+
+.home img:nth-of-type(2) {
+  top: 32%;
+  right: -10%;
+  width: 30%;
+}
+
+.home img:last-of-type {
+  bottom: 2%;
+  left: -10%;
+  width: 30%;
+}
+
+.home p, .home h3 {
+  color: var(--light_shadow);
+}
+
+.home p {
+  font-size: 14px;
+  padding-bottom: 2%;
+  margin-bottom: 3%;
+  border-bottom: 1px solid var(--details);
+}
+
+.home h3 {
+  margin: 2% 0;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.home div {
+  padding-bottom: 5%;
+  position: relative;
+}
+
+.home div:first-of-type {
+  left: 20%;
+}
+
+.home div:nth-of-type(2) {
+  text-align: right;
+}
