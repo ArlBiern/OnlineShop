@@ -1,0 +1,10 @@
+.about img {
+  width: 50%;
+  top: 7%;
+  left: -10%;
+}
+
+.about p {
+  position: relative;
+  left: 40%;
+}

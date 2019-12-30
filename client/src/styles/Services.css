@@ -12,7 +12,6 @@
   overflow: hidden;
   height: auto;
   margin-bottom: 50px;
-  margin-top: 50px;
 }
 
 .gallery-3d-cnt {
@@ -38,19 +37,21 @@
   cursor: pointer;
   outline: none;
   width: 30px;
-  background-image: linear-gradient(#222, rgb(133, 133, 245), #222);
+  background-image: linear-gradient(var(--main_background), var(--light_shadow), var(--main_background));
   border: none;
   height: 30%;
   position: relative;
   z-index: 2;
+  opacity: 0.5;
+  transition: 0.4s ease;
 }
 
 .gallery-3d-previous:hover, .gallery-3d-next:hover {
-  border: 1px solid rgb(133, 133, 245);
+  opacity: 1;
 }
 
 .gallery-3d-previous:active, .gallery-3d-next:active {
-  color: #fff;
+  color: var(--details);
 }
 
 .gallery-3d-elements {
@@ -62,8 +63,7 @@
   justify-content: center;
   align-items: center;
   transform-style: preserve-3d;
-  background-position: center;
-  background-size: cover;
+
   transition: 1s all ease-in-out;
 }
 
@@ -72,13 +72,12 @@
   z-index: 1;
   width: 65%;
   height: 65%;
-  background-color: rgba(40, 180, 100, 0.5);
+  background-color: var(--main_font_color);
+  padding: 5px;
+  background-clip: content-box;
   position: absolute;
-  font-size: 16px;
-  text-align: center;
   transition: 1.2s ease-in-out;
-  border-radius: 10px;
-
+  border: 1px solid var(--details);
 }
 
 .gallery-3d-element:not(.active) {
@@ -98,40 +97,34 @@
   display: none;
 }
 
-.game_link {
-  color: blue;
-  backface-visibility: hidden;
-  font-size: 25px;
-  text-decoration: none;
-  background-color: #fff;
-  padding: 5px 10px;
-  border-radius: 13px;
-}
-
 /* === Details/description section === */
 
 .gallery-3d-element-details {
-  border: 2px solid rgb(133, 133, 245);
-  box-shadow: 5px 5px 5px #000;
-  background: rgba(133, 133, 245, 0.25);
+  box-shadow: 0 0 10px var(--main_background);
   width: 80%;
-  padding: 20px;
+  padding: 20px 20px 40px;
   margin: 2vh;
-  color: #fff;
-  border-radius: 10px;
+  color: var(--light_shadow);
   text-align: center;
 }
 
 .gallery-3d-title {
   margin-bottom: 10px;
+  color: var(--details);
   font-size: 24px;
 }
 
 .gallery-3d-text {
-  font-size: 18px;
+  font-size: 14px;
+  margin: 30px 0;
 }
 
 .gallery-3d-price {
-  margin-top: 20px;
-  font-size: 18px;
+  margin: 30px 0;
+  font-size: 16px;
+}
+
+.h_services {
+  width: 88%;
+  margin: 2.7% auto;
 }

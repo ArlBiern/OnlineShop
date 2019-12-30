@@ -1,5 +1,6 @@
 import React  from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { getServices } from '../../actions/servicesActions';
 import Service from './Service';
 import '../../styles/Services.css';
@@ -127,23 +128,27 @@ class Services extends React.Component {
 
   render() {
     return (
-      <div className="gallery-3d">
-        <div className="gallery-3d-cnt">
-          <div className='gallery-3d-images'>
-            <button className="gallery-3d-previous"></button>
-            <div className="gallery-3d-elements">
-              {this.props.services.map((service) =>  {
-                return (
-                  <Service key={service.title} service={service}/>
-                )
-              })}
+      <div>
+        <h1 className="h_services">Usługi</h1>
+        <div className="gallery-3d">
+          <div className="gallery-3d-cnt">
+            <div className='gallery-3d-images'>
+              <button className="gallery-3d-previous"></button>
+              <div className="gallery-3d-elements">
+                {this.props.services.map((service) =>  {
+                  return (
+                    <Service key={service.title} service={service}/>
+                  )
+                })}
+              </div>
+              <button className="gallery-3d-next"></button>
             </div>
-            <button className="gallery-3d-next"></button>
-          </div>
-          <div className="gallery-3d-element-details">
-            <h2 className="gallery-3d-title">Tytuł</h2>
-            <p className="gallery-3d-text"></p>
-            <p className="gallery-3d-price"></p>
+            <div className="gallery-3d-element-details">
+              <h2 className="gallery-3d-title">Tytuł</h2>
+              <p className="gallery-3d-text"></p>
+              <p className="gallery-3d-price"></p>
+              <Link to="/contact" className="main_button">Kontakt</Link>
+            </div>
           </div>
         </div>
       </div>

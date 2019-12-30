@@ -91,3 +91,24 @@ ul {
   color: var(--dark_shadow);
   font-weight: 600;
 }
+
+.desc_container {
+  width: 80%;
+  padding: 4% 20%;
+  margin: 4% auto;
+  box-shadow: 0 0 10px var(--main_background);
+  position: relative;
+  color: var(--light_shadow);
+}
+
+.desc_container img {
+  padding: 5px;
+  height: auto;
+  border: 1px solid var(--details);
+  position: absolute;
+}
+
+.desc_container p {
+  font-size: 14px;
+  padding-bottom: 2%;
+}
