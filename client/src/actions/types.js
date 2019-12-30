@@ -10,5 +10,9 @@ export const REGISTER_FAIL = 'REGISTER_FAIL';
 export const GET_ERRORS = 'GET_ERRORS';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 
+//Products
+export const FETCH_PRODUCTS = 'FETCH_PRODUCTS';
+export const FETCH_PRODUCT = 'FETCH_PRODUCT';
+
 // Services
 export const GET_SERVICES = 'GET_SERVICES';
