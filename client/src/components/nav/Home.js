@@ -4,7 +4,7 @@ import '../../styles/Home.css'
 const Home = () => {
   return (
     <div className="container">
-      <div className="home">
+      <div className="home desc_container">
         <img src="/img/home3.png" alt="wieszak na klucze z różą" />
         <img src="/img/home1.png" alt="żyrandol, lampa w kształcie żarówki" />
         <img src="/img/home2.png" alt="materiał drewno, różne kolory" />
