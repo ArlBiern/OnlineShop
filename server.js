@@ -12,6 +12,7 @@ const app = express();
 const user = require('./routes/user');
 const login = require('./routes/login');
 const products = require('./routes/product');
+const cart = require('./routes/cart');
 
 const connectionString = `mongodb://${config.get('db.user')}:${config.get('db.password')}@${config.get('db.address')}/${config.get('db.name')}`;
 
@@ -47,6 +48,9 @@ app.use('/login/user', login); // do weryfikacji czy użytkonik jest zalogowany 
 
 // Products
 app.use('/products', products);
+
+// Cart
+app.use('/cart', cart); // obsługa tworzenia i aktualizacji zawartości koszyka
 
 const port = process.env.PORT || 5000;
 
