@@ -5,5 +5,9 @@
     "address": "DB_DATABASE_ADDRESS",
     "name": "DB_DATABASE_NAME"
   },
-  "jwtPrivateKey": "JWT_PRIVATEKEY"
+  "jwtPrivateKey": "JWT_PRIVATEKEY",
+  "email": {
+    "user": "EMAIL",
+    "pass": "EMAIL_PASSWORD"
+  }
 }

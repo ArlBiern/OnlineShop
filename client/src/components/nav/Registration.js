@@ -133,7 +133,7 @@ class Registration extends React.Component {
           </div>
         </form>
         <div>
-          { this.state.alertMsg ? <p>{this.state.alertMsg}</p> : null }
+          { this.state.alertMsg ? <p className="error_box">{this.state.alertMsg}</p> : null }
         </div>
       </div>
     )

@@ -1,8 +1,11 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
+import { sendEmail } from '../../actions/contactActions';
 import '../../styles/Forms.css';
 
 class Contact extends React.Component {
+  state = { alertMsg: ''}
 
   renderError({ error, touched }) {
     if (touched && error) {
@@ -37,8 +40,19 @@ class Contact extends React.Component {
     );
   }
 
-  onSubmit(formValues) {
-    console.log(formValues);
+  onSubmit = (formValues) => {
+    this.props.sendEmail(formValues);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!(this.props.contact.length === prevProps.contact.length)) {
+      const index = this.props.contact.length - 1
+      if (this.props.contact[index] === 1) {
+        this.props.history.push('/')
+      } else if (this.props.contact[index] === 2) {
+        this.setState({alertMsg: 'Nie udało się wysłać wiadomości, spróbuj ponownie'});
+      }
+    }
   }
 
   render() {
@@ -77,6 +91,9 @@ class Contact extends React.Component {
             </button>
           </div>
         </form>
+        <div>
+          { this.state.alertMsg ? <p className="error_box">{this.state.alertMsg}</p> : null }
+        </div>
       </div>
     )
   }
@@ -130,7 +147,13 @@ const validate = formValues => {
   return errors;
 }
 
-export default reduxForm({
+const MapStateToProps = state => {
+  return { contact: state.contact }
+}
+
+const formWrapped = reduxForm({
   form: 'contact',
   validate
 })(Contact);
+
+export default connect(MapStateToProps, { sendEmail })(formWrapped);

@@ -53,3 +53,10 @@ button.main_button {
   outline: none;
   border: 1px solid var(--main_font_color);
 }
+
+.error_box {
+  background-color: var(--details);
+  opacity: 0.5;
+  text-align: center;
+  padding: 10px;
+}
