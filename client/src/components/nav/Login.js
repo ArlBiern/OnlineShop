@@ -78,7 +78,7 @@ class Login extends React.Component {
             </button>
           </div>
           <div>
-            { this.state.alertMsg ? <p>{this.state.alertMsg}</p> : null }
+            { this.state.alertMsg ? <p className="error_box">{this.state.alertMsg}</p> : null }
           </div>
         </form>
       </div>

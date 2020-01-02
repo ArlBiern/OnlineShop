@@ -19,10 +19,8 @@ button.main_button {
   margin: 0 auto;
 }
 
-.user_form input {
+.user_form input, .user_form textarea {
   width: 90%;
-  border: none;
-  border-bottom: 1px solid var(--details);
   background: inherit;
   padding: 2px 0;
   margin-bottom: 15px;
@@ -30,7 +28,18 @@ button.main_button {
   color: var(--main_font_color);
 }
 
-.user_form input::placeholder {
+.user_form input {
+  border: none;
+  border-bottom: 1px solid var(--details);
+}
+
+.user_form textarea {
+  border: 1px solid var(--details);
+  resize: none;
+  height: 20vh;
+}
+
+.user_form input::placeholder, .user_form textarea::placeholder {
   font-size: 14px;
 }
 
@@ -38,4 +47,16 @@ button.main_button {
   border: none;
   outline: none;
   border-bottom: 1px solid var(--main_font_color);
+}
+
+.user_form textarea:focus {
+  outline: none;
+  border: 1px solid var(--main_font_color);
+}
+
+.error_box {
+  background-color: var(--details);
+  opacity: 0.5;
+  text-align: center;
+  padding: 10px;
 }
