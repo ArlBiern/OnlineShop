@@ -20,3 +20,6 @@ export const GET_SERVICES = 'GET_SERVICES';
 //Contact
 export const EMAIL_SUCCESS = 'EMAIL_SUCCESS';
 export const EMAIL_FAIL = 'EMAIL_FAIL';
+
+//Cart
+export const FETCH_CART ='FETCH_CART';

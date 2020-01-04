@@ -89,3 +89,6 @@ nav ul li span {
   padding-left: 10px;
 }
 
+nav button {
+  background-color: inherit;
+}

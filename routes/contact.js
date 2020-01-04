@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 const nodemailer = require('nodemailer');
 
-router.post('/', async (req, res) => {
+router.post('/', (req, res) => {
   const dateNow = new Date().toLocaleDateString();
   const timeNow = new Date().toLocaleTimeString();
 

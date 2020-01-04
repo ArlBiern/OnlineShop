@@ -3,10 +3,19 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import '../styles/Navigation.css';
 import { logoutUser } from '../actions/authActions';
+import { fetchCart } from '../actions/cartActions';
 
 class Navigation extends React.Component {
   handleLogout = () => {
     this.props.logoutUser();
+  }
+
+  getCart = () => {
+    if (this.props.isAuthenticated) {
+      this.props.fetchCart();
+    } else {
+      alert('Musisz się zalogować żeby zajrzeć do koszyka');
+    }
   }
 
   renderPersonalizedNav() {
@@ -21,7 +30,7 @@ class Navigation extends React.Component {
       return (
         <ul>
           <li>Witaj <span>{this.props.user.name}</span></li>
-          <li><Link to="/cart" className="cart"><img src="/img/cart.png" alt="ikona koszyk" /></Link></li>
+          <li><Link to="/cart" onClick={this.getCart} className="cart"><img src="/img/cart.png" alt="ikona koszyk" /></Link></li>
           <li><Link to="/" onClick={this.handleLogout}>Wyloguj</Link></li>
         </ul>
       );
@@ -52,8 +61,8 @@ class Navigation extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.auth.user,
-    isAuthenticated: state.auth.isAuthenticated
+    isAuthenticated: state.auth.isAuthenticated,
   }
 }
 
-export default connect(mapStateToProps, { logoutUser })(Navigation);
+export default connect(mapStateToProps, { logoutUser, fetchCart })(Navigation);
