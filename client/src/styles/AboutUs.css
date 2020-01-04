@@ -8,3 +8,22 @@
   position: relative;
   left: 40%;
 }
+
+@media (max-width: 1000px) {
+  .about p {
+    left: 0;
+    text-align: justify;
+  }
+  .container .about img {
+    position: static;
+    width: 70%;
+    display: block;
+    margin: 2% auto 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .container .about img {
+    width: 100%;
+  }
+}

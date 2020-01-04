@@ -34,3 +34,27 @@ footer div {
   text-align: end;
   width: 60%;
 }
+
+@media (max-width: 1020px) {
+  footer p, footer div {
+    width: 100%;
+    text-align: center;
+  }
+  footer p {
+    padding-top: 1%;
+    order: 1;
+    text-decoration: underline overline;
+    text-decoration-color: var(--details);
+  }
+}
+
+@media (max-width: 630px) {
+  footer div {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+  }
+  footer div a {
+    padding: 1% 0;
+  }
+}
