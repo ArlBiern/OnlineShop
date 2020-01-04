@@ -39,3 +39,20 @@
   font-weight: 600;
   font-size: 24px;
 }
+
+@media (max-width: 1000px) {
+  .product_box {
+    width: 45%;
+  }
+}
+
+@media (max-width: 650px) {
+  .products_container {
+    display: block;
+  }
+  .product_box {
+    width: 100%;
+    padding: 3%;
+    margin: 4% auto;
+  }
+}

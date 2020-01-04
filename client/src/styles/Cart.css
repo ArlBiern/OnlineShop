@@ -72,3 +72,34 @@ div.cart {
 .user_products div {
   text-align: right;
 }
+
+@media (max-width: 1200px) {
+  div.cart {
+    display: block;
+  }
+  .user_data, .user_products {
+    margin: 2% auto;
+  }
+  .user_data {
+    width: 60%;
+    padding: 3% 1%;
+    box-shadow: 0 0 5px var(--main_background);
+    border-right: none;
+    margin-bottom: 4%;
+  }
+  .user_products{
+    width: 95%;
+  }
+}
+
+@media (max-width: 900px) {
+  .user_products ul li span:first-child {
+    width: 100%;
+  }
+  .user_products ul li {
+    flex-wrap: wrap;
+  }
+  .user_data {
+    width: 90%;
+  }
+}

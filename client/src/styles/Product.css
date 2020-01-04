@@ -18,7 +18,26 @@
   font-weight: 600;
 }
 
-.price {
+.product .price {
   font-size: 24px;
   color: var(--details);
+}
+
+@media (max-width: 1000px) {
+  .product, .product .product_img {
+    display: block;
+  }
+  .product .description p:first-of-type {
+    text-align: justify;
+  }
+  .product .product_img {
+    margin: 3% auto;
+    width: 90%;
+  }
+}
+
+@media (max-width: 500px) {
+  .product .product_img {
+    width: 100%;
+  }
 }

@@ -23,6 +23,7 @@ body {
   color: var(--main_font_color);
   min-height: 100vh;
   background-image: linear-gradient(90deg, var(--main_background), var(--light_shadow), var(--main_background));
+  min-width: 320px;
 }
 
 h1 {
@@ -111,4 +112,22 @@ ul {
 .desc_container p {
   font-size: 14px;
   padding-bottom: 2%;
+}
+
+@media (max-width: 1000px) {
+  .desc_container {
+    padding: 4%;
+  }
+}
+
+@media (max-width: 700px) {
+  .desc_container {
+    width: 90%;
+  }
+}
+
+@media (max-width: 400px) {
+  .desc_container {
+    width: 100%;
+  }
 }
