@@ -5,7 +5,7 @@ const auth = require('../middleware/auth');
 
 // Get cart
 router.get('/', auth, async (req, res) => {
-  const cart = await Cart.findOne({user: req.user._id}).populate({ path: 'items.product', select: 'name price' });
+  const cart = await Cart.findOne({user: req.user._id}).populate({ path: 'user', select: 'name surname address postal_code city phone email'}).populate({ path: 'items.product', select: 'name price' });
   if (!cart) return res.status(404).json({msg: "Szukany koszyk nie istnieje"});
   
   res.status(200).send(cart);
@@ -23,7 +23,7 @@ router.post('/', auth, async (req, res) => {
 
   const newItem = {
     product: req.body.product,
-    quantity: req.body.quantity || 1  // set default walue in the future to 1
+    quantity: req.body.quantity || 1  // set default value in the future to 1
   }
 
   let cart = await Cart.findOne({ user: req.user._id });
@@ -90,11 +90,11 @@ router.put('/quantity', auth,  async (req, res) => {
 });
 
 // delete product from the cart
-router.delete('/product', auth,  async (req, res) => {
+router.delete('/product/:id', auth,  async (req, res) => {
   let cart = await Cart.findOne({ user: req.user._id });
   if (!cart) return res.status(400).json({ msg: 'Niepoprawnie wprowadzone dane, spróbuj jeszcze raz'});
-  
-  const itemMatch = cart.items.filter((item) => item["product"] == req.body.product);
+
+  const itemMatch = cart.items.filter((item) => item["product"] == req.params.id);
 
   if (itemMatch.length === 0) {
     return res.status(200).send(cart);

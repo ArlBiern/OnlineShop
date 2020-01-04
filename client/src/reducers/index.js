@@ -6,6 +6,7 @@ import productsReducer from './productsReducer';
 import productReducer from './productReducer';
 import servicesReducer from './servicesReducer';
 import contactReducer from './contactReducer';
+import cartReducer from './cartReducer';
 
 export default combineReducers({
   form: formReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
   error: errorReducer,
   auth: authReducer,
   services: servicesReducer,
-  contact: contactReducer
+  contact: contactReducer,
+  cart: cartReducer
 });

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import { loginUser } from '../../actions/authActions';
+import { loginUser, loadUser } from '../../actions/authActions';
 import '../../styles/Forms.css';
 
 class Login extends React.Component {
@@ -46,7 +46,8 @@ class Login extends React.Component {
 
     if (isAuthenticated !== prevProps.isAuthenticated) {
       if (isAuthenticated) {
-        this.props.history.push('/') 
+        this.props.history.push('/');
+        this.props.dispatch(loadUser());
       }
     }
   }

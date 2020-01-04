@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { fetchProduct } from '../actions';
+import { addProduct } from '../actions/cartActions';
 import '../styles/Product.css';
 
 class Product extends React.Component {
@@ -9,8 +9,17 @@ class Product extends React.Component {
     this.props.fetchProduct(this.props.match.params.id);
   }
 
+  addToCart = () => {
+    if (this.props.state.auth.isAuthenticated) {
+      this.props.history.push('/cart');
+      this.props.addProduct(this.props.match.params.id);
+    } else {
+      alert('Musisz się zalogować żeby dodać przedmiot do koszyka')
+    }
+  }
+
   renderProduct = () => {
-    const product = this.props.product;
+    const product = this.props.state.product;
 
     if (!product.name) {
       return (
@@ -30,7 +39,7 @@ class Product extends React.Component {
               <p><span>Wymiary:</span> waga: {product.weight}, wysokość: {product.height}, szerokość: {product.width}, długość: {product.length}</p>
               <div className="button_box">
                 <p className="price"><span>Cena: </span>{product.price}zł</p>
-                <Link to="/cart" className="product_cart"><img src="/img/cart.png" alt="ikona koszyk" /></Link>
+                <button onClick={this.addToCart} className="product_cart"><img src="/img/cart.png" alt="ikona koszyk" /></button>
               </div>
             </div>
           </div>
@@ -49,7 +58,7 @@ class Product extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return { product: state.product }
+  return { state }
 }
 
-export default connect(mapStateToProps, {fetchProduct})(Product);
+export default connect(mapStateToProps, { fetchProduct, addProduct })(Product);

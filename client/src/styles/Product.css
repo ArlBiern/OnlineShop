@@ -18,7 +18,7 @@
   font-weight: 600;
 }
 
-.description .price {
+.price {
   font-size: 24px;
   color: var(--details);
 }
