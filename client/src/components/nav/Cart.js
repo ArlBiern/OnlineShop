@@ -45,7 +45,7 @@ class Cart extends React.Component {
     let sum = 0;
     if (this.props.cart.length !== 0) {
       this.props.cart.items.map(product => {
-        sum += (product.quantity * product.product.price);
+        return sum += (product.quantity * product.product.price);
       });
     } else {
       sum = 0
@@ -60,7 +60,7 @@ class Cart extends React.Component {
         return (
           <li key={product.product._id}>
             <span>{product.product.name}</span>
-            <span>ilość: <input onChange={this.changeQuantity} type="number" min="1" max="20" data-id={product.product._id} value={product.quantity}/></span>
+            <span>ilość: <input onChange={this.changeQuantity} type="number" min="1" max="10" data-id={product.product._id} value={product.quantity}/></span>
             <span>cena: {total_price}zł</span>
             <button value={product.product._id} onClick={this.deleteFromCart}><img src="/img/trash.png" alt="ikona kosz usuń" /></button>
           </li>

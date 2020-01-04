@@ -5,17 +5,31 @@ import { addProduct } from '../actions/cartActions';
 import '../styles/Product.css';
 
 class Product extends React.Component {
+  state = { alertMsg: null}
+
   componentDidMount() {
     this.props.fetchProduct(this.props.match.params.id);
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.appErrors !== prevProps.appErrors) {
+      if (this.props.appErrors.id === "UNAUTH_PRODUCT_ADD") {
+        this.setState({alertMsg: this.props.appErrors.msg});
+        window.scrollTo(0, 0);
+      }
+    }
+  }
+
   addToCart = () => {
+    this.props.addProduct(this.props.match.params.id);
+    
+    if (this.props.appErrors.id === "UNAUTH_PRODUCT_ADD") {
+      this.setState({alertMsg: this.props.appErrors.msg})
+    }
+
     if (this.props.state.auth.isAuthenticated) {
       this.props.history.push('/cart');
-      this.props.addProduct(this.props.match.params.id);
-    } else {
-      alert('Musisz się zalogować żeby dodać przedmiot do koszyka')
-    }
+    } 
   }
 
   renderProduct = () => {
@@ -29,6 +43,9 @@ class Product extends React.Component {
       return (
         <div>
           <h1>{product.name}</h1>
+          <div>
+            { this.state.alertMsg ? <p className="error_box">{this.state.alertMsg}</p> : null }
+          </div>
           <div className="product">
             <img className="product_img" src={product.photo} alt={product.name} />
             <div className="description">
@@ -58,7 +75,10 @@ class Product extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return { state }
+  return { 
+    state: state,
+    appErrors: state.error
+  }
 }
 
 export default connect(mapStateToProps, { fetchProduct, addProduct })(Product);

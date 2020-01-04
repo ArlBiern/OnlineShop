@@ -3,21 +3,35 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchProducts } from '../../actions';
 import { addProduct } from '../../actions/cartActions';
+import { clearErrors, returnErrors } from '../../actions/errorActions';
 import '../../styles/Shop.css';
 
 class Shop extends React.Component {
+  state = { alertMsg: null}
+
   componentDidMount() {
     this.props.fetchProducts();
   }
 
-  addToCart = e => {
-    if (this.props.state.auth.isAuthenticated) {
-      this.props.addProduct(e.currentTarget.value);
-      //this.props.dispatch(fetchProducts());
-      this.props.history.push('/cart');
-    } else {
-      alert('Musisz się zalogować żeby dodać przedmiot do koszyka');
+  componentDidUpdate(prevProps) {
+    if (this.props.appErrors !== prevProps.appErrors) {
+      if (this.props.appErrors.id === "UNAUTH_PRODUCT_ADD") {
+        this.setState({alertMsg: this.props.appErrors.msg});
+        window.scrollTo(0, 0);
+      }
     }
+  }
+
+  addToCart = e => {
+    this.props.addProduct(e.currentTarget.value);
+    
+    if (this.props.appErrors.id === "UNAUTH_PRODUCT_ADD") {
+      this.setState({alertMsg: this.props.appErrors.msg})
+    }
+
+    if (this.props.state.auth.isAuthenticated) {
+      this.props.history.push('/cart');
+    }  
   }
 
   renderProductsList() {
@@ -48,6 +62,9 @@ class Shop extends React.Component {
     return (
       <div className="container">
         <h1>Nasze produkty</h1>
+        <div>
+          { this.state.alertMsg ? <p className="error_box">{this.state.alertMsg}</p> : null }
+        </div>
         <div className="products_container">
           {this.renderProductsList()}
         </div>
@@ -57,7 +74,10 @@ class Shop extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return { state }
+  return { 
+    state: state,
+    appErrors: state.error
+  }
 }
 
-export default connect(mapStateToProps, { fetchProducts, addProduct })(Shop);
+export default connect(mapStateToProps, { fetchProducts, addProduct, returnErrors, clearErrors })(Shop);

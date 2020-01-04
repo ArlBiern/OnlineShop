@@ -165,7 +165,7 @@ const validate = formValues => {
     errors.email = 'E-mail powinien być dłuższy niż 6 znaków';
   } else if (formValues.email.length > 60) {
     errors.email = 'E-mail powinien być krótszy niż 60 znaków';
-  } else if (!/^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/.test(formValues.email)) {
+  } else if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(formValues.email)) {
     errors.email = 'Niepoprawny adres e-mail'
   }
 

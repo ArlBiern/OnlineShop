@@ -1,5 +1,5 @@
 import streams from '../apis/streams';
-import { returnErrors } from './errorActions';
+import { returnErrors, clearErrors } from './errorActions';
 import { tokenConfig } from './helper';
 
 import { 
@@ -18,10 +18,13 @@ export const loadUser = () => (dispatch, getState) => {
   dispatch({ type: USER_LOADING });
 
   streams.get('/login/user', tokenConfig(getState))
-    .then(res => dispatch({
-      type: USER_LOADED, 
-      payload: res.data
-    }))
+    .then(res => {
+      dispatch(clearErrors());
+      dispatch({
+        type: USER_LOADED, 
+        payload: res.data
+      })
+    })
     .catch(err => {
       if (err.response) {
         dispatch(returnErrors(err.response.data.msg, err.response.status));
@@ -39,10 +42,10 @@ export const registerUser = formValues => dispatch => {
     .then(res => {
       dispatch({
         type: REGISTER_SUCCESS
-      })
+      });
+      dispatch(clearErrors());
     })
     .catch(err => {
-      console.log(err);
       if (err) {
         dispatch(returnErrors(err.response.data, err.response.status, 'REGISTER_FAIL'))
         dispatch({

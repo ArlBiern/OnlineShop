@@ -4,7 +4,7 @@ const router = express.Router();
 const { User, validateUserLogin } = require('../models/user');
 const auth = require('../middleware/auth');
 
-// Register new user
+// Login new user
 router.post('/', async (req, res) => {
   // Validate the input
   const { error } = validateUserLogin(req.body);

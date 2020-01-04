@@ -17,14 +17,9 @@ import Regulations from './footer/Regulations';
 import Warranty from './footer/Warranty';
 import PageNotFound from './PageNotFound';
 import Product from './Product';
-import { loadUser } from '../actions/authActions';
 import '../styles/App.css';
 
 class App extends React.Component {
-  componentDidMount() {
-    this.props.dispatch(loadUser());
-  }
-
   render () {
     return (
       <div className="App">

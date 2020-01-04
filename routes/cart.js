@@ -23,7 +23,7 @@ router.post('/', auth, async (req, res) => {
 
   const newItem = {
     product: req.body.product,
-    quantity: req.body.quantity || 1  // set default value in the future to 1
+    quantity: req.body.quantity || 1
   }
 
   let cart = await Cart.findOne({ user: req.user._id });
@@ -31,6 +31,7 @@ router.post('/', auth, async (req, res) => {
   // Case cart is already created
   if (cart) {
     let oldProducts = cart.items.map(item => item.product);
+    
     // Check whether product is already in the cart
     if (oldProducts.includes(newItem.product)) {
       cart = await Cart.findOneAndUpdate({
@@ -72,6 +73,8 @@ router.put('/quantity', auth,  async (req, res) => {
   let cart = await Cart.findOne({ user: req.user._id });
   if (!cart) return res.status(400).json({ msg: 'Nieprawnie wprowadzone dane, spróbuj jeszcze raz'});
   
+  const quantity = req.body.quantity > 10 ? 10 : req.body.quantity
+
   // updating product quantity
   cart = await Cart.findOneAndUpdate({
     user: req.user._id,
@@ -80,7 +83,7 @@ router.put('/quantity', auth,  async (req, res) => {
     },
   },
   {
-    'items.$.quantity': req.body.quantity
+    'items.$.quantity': quantity
   },
   {
     new: true

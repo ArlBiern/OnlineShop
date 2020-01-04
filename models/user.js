@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'E-mail nie może być pusty'],
     match: [
-      /^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/,
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
       'Błędny adres e-mail'
     ],
     minlength: 6,
@@ -75,10 +75,16 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.methods.generateAuthToken = function () {
-  const token = jwt.sign({
-    _id: this._id,
-    name: this.name
-  }, config.get('jwtPrivateKey'));
+  const token = jwt.sign(
+    {
+      _id: this._id,
+      name: this.name
+    }, 
+    config.get('jwtPrivateKey'), 
+    {
+      expiresIn: '1h'
+    }
+  );
   return token;
 }
 
@@ -97,7 +103,7 @@ function validateUserRegistration(user) {
     email: Joi.string()
       .min(6)
       .max(60)
-      .regex(/^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/)
+      .regex(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
       .required(),
     phone: Joi.string().
       min(9).
@@ -130,7 +136,7 @@ function validateUserLogin(user) {
     email: Joi.string()
       .min(6)
       .max(60)
-      .regex(/^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/)
+      .regex(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
       .required(), 
     password: Joi.string()
       .min(8)
