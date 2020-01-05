@@ -60,3 +60,15 @@ button.main_button {
   text-align: center;
   padding: 10px;
 }
+
+@media (max-width: 1000px) {
+  .user_form {
+    width: 80%;
+  }
+}
+
+@media (max-width: 500px) {
+  .user_form {
+    width: 95%;
+  }
+}

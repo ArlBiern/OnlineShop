@@ -6,7 +6,9 @@ import '../../styles/Cart.css';
 
 class Cart extends React.Component {
   componentDidMount() {
-    this.props.fetchCart();
+    if (this.props.state.auth.isAuthenticated) {
+      this.props.fetchCart();
+    }
   }
 
   onClickBuy() {
@@ -25,9 +27,9 @@ class Cart extends React.Component {
     this.props.deleteProduct(e.currentTarget.value);
   }
 
-  renderUserData() {
-    const { user } = this.props.cart;
-    if (this.props.cart.length !== 0) {
+  renderUserData () {
+    const user = this.props.state.cart.user;
+    if (this.props.state.cart.length !== 0 && this.props.state.auth.isAuthenticated) {
       return (
         <ul>
           <li>{user.name} {user.surname}</li>
@@ -44,8 +46,9 @@ class Cart extends React.Component {
 
   renderSum() {
     let sum = 0;
-    if (this.props.cart.length !== 0) {
-      this.props.cart.items.map(product => {
+    const cart = this.props.state.cart;
+    if (cart.length !== 0 && cart.items && cart.items.length !== 0 && this.props.state.auth.isAuthenticated) {
+      cart.items.map(product => {
         return sum += (product.quantity * product.product.price);
       });
     } else {
@@ -55,8 +58,9 @@ class Cart extends React.Component {
   }
 
   renderProductList() {
-    if (this.props.cart.length !== 0) {
-      return this.props.cart.items.map(product => {
+    const cart = this.props.state.cart;
+    if (cart.length !== 0 && cart.items && cart.items.length !== 0 && this.props.state.auth.isAuthenticated) {
+      return cart.items.map(product => {
         const total_price = product.quantity * product.product.price;
         return (
           <li key={product.product._id}>
@@ -99,14 +103,16 @@ Cart.propTypes = {
   fetchCart: PropTypes.func.isRequired,
   deleteProduct: PropTypes.func.isRequired,
   changeProductQuantity: PropTypes.func.isRequired,
-  cart: PropTypes.oneOfType([
-    PropTypes.array,
-    PropTypes.object,
-  ]),
+  state: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string.isRequired,
+    PropTypes.array.isRequired,
+    PropTypes.object.isRequired,
+  ])).isRequired,
 };
 
 const mapStateToProps = (state) => {
-  return { cart: state.cart };
+  return { state };
 };
+
 
 export default connect(mapStateToProps, { fetchCart, deleteProduct, changeProductQuantity })(Cart);
