@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../styles/Home.css'
+import '../../styles/Home.css';
 
 const Home = () => {
   return (
@@ -22,7 +22,7 @@ const Home = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Home;

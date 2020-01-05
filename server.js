@@ -1,5 +1,6 @@
 require('dotenv').config();
 require('express-async-errors');
+const winston = require('winston');
 const express = require('express');
 const basicDebug = require('debug')('app:startup');
 const dbDebug = require('debug')('app:db');
@@ -17,34 +18,39 @@ const cart = require('./routes/cart');
 const contact = require('./routes/contact');
 const error = require('./middleware/error');
 
-mongoose.connect('mongodb://localhost/vidly', {
+// Basic handling exceptions and promise rejections
+process.on('uncaughtException', (ex) => {
+  winston.error(ex.message, ex);
+});
+
+process.on('unhandledRejection', (ex) => {
+  winston.error(ex.message, ex);
+});
+
+winston.add(new winston.transports.File({
+  filename: 'logfile.log',
+  handleExceptions: true,
+}));
+
+const connectionString = `mongodb://${config.get('db.user')}:${config.get('db.password')}@${config.get('db.address')}/${config.get('db.name')}`;
+mongoose.connect(connectionString, {
   useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true
+  useUnifiedTopology: true,
+  useCreateIndex: true,
 })
-  .then(() => console.log('Connected to MongoDB...'))
-  .catch(err => console.error('Could not connect to MongoDB...'));
-
-// const connectionString = `mongodb://${config.get('db.user')}:${config.get('db.password')}@${config.get('db.address')}/${config.get('db.name')}`;
-
-/* mongoose.connect(connectionString, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true
-  })
   .then(() => dbDebug('Connected to MongoDB...'))
   .catch((err) => {
     dbDebug('Could not connect to MongoDB.', err.message);
-  }); */
+  });
 
 if (app.get('env') === 'development') {
   app.use(morgan('tiny'));
-  basicDebug('Morgan enabled...')
+  basicDebug('Morgan enabled...');
 }
 
-//Seed products in databease
-//const seedProducts = require('./seeds/products');
-//seedProducts();
+// Seed products in databease
+// const seedProducts = require('./seeds/products');
+// seedProducts();
 
 app.use(cors());
 app.use(express.json());
@@ -52,21 +58,13 @@ app.use(express.urlencoded({
   extended: true,
 }));
 
-// User registration 
-app.use('/registration', user); // rejestracja użytkownika
-app.use('/login', login); // logowanie użytkownika
-app.use('/login/user', login); // do weryfikacji czy użytkonik jest zalogowany (czy posiada token)
-
-// Products
+app.use('/registration', user);
+app.use('/login', login);
+app.use('/login/user', login);
 app.use('/products', products);
-
-// Cart
-app.use('/cart', cart); // obsługa tworzenia i aktualizacji zawartości koszyka
-
-// Contact
+app.use('/cart', cart);
 app.use('/contact', contact);
 
-// Error middleware
 app.use(error);
 
 const port = process.env.PORT || 5000;

@@ -5,7 +5,7 @@ const Regulations = () => {
     <div className="container">
       <h1>Regulamin</h1>
     </div>
-  )
-}
+  );
+};
 
 export default Regulations;

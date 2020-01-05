@@ -1,8 +1,9 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const router = express.Router();
 const { User, validateUserLogin } = require('../models/user');
 const auth = require('../middleware/auth');
+
+const router = express.Router();
 
 // Login new user
 router.post('/', async (req, res) => {
@@ -15,8 +16,8 @@ router.post('/', async (req, res) => {
   }
 
   // Checking whether user is already registered
-  let user = await User.findOne({ email: req.body.email });
-  if (!user) return res.status(400).json({ msg: 'Nie jesteś zarejestrowanym użytkownikiem'});
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) return res.status(400).json({ msg: 'Nie jesteś zarejestrowanym użytkownikiem' });
 
   // Checking password
   const validPassword = await bcrypt.compare(req.body.password, user.password);
@@ -24,19 +25,19 @@ router.post('/', async (req, res) => {
 
   const token = user.generateAuthToken();
 
-  let resUser = {
+  const resUser = {
     name: user.name,
-    surname: user.surname, 
-    email: user.email, 
-    phone: user.phone, 
+    surname: user.surname,
+    email: user.email,
+    phone: user.phone,
     address: user.address,
-    postal_code: user.postal_code, 
-    city: user.city
-  }
+    postal_code: user.postal_code,
+    city: user.city,
+  };
 
-  res.status(200).send({
-    token: token,
-    user: resUser
+  return res.status(200).send({
+    token,
+    user: resUser,
   });
 });
 

@@ -1,20 +1,31 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { sendEmail } from '../../actions/contactActions';
 import '../../styles/Forms.css';
 
 class Contact extends React.Component {
-  state = { alertMsg: ''}
+  state = { alertMsg: '' }
 
-  renderError({ error, touched }) {
-    if (touched && error) {
-      return (
-        <div className="error_container">
-          <p>{error}</p>
-        </div>
-      )
+  componentDidUpdate(prevProps) {
+    if (!(this.props.contact.length === prevProps.contact.length)) {
+      const index = this.props.contact.length - 1;
+      if (this.props.contact[index] === 1) {
+        this.props.history.push('/');
+      } else if (this.props.contact[index] === 2) {
+        this.setState({ alertMsg: 'Nie udało się wysłać wiadomości, spróbuj ponownie' });
+      }
     }
+  }
+
+  renderTextarea = ({ input, placeholder, meta }) => {
+    return (
+      <div>
+        <textarea {...input} placeholder={placeholder} />
+        {this.renderError(meta)}
+      </div>
+    );
   }
 
   renderInput = ({ input, placeholder, meta }) => {
@@ -31,27 +42,17 @@ class Contact extends React.Component {
     );
   }
 
-  renderTextarea = ({ input, placeholder, meta }) => {
-    return (
-      <div>
-        <textarea {...input} placeholder={placeholder}></textarea>
-        {this.renderError(meta)}
-      </div>
-    );
-  }
-
   onSubmit = (formValues) => {
     this.props.sendEmail(formValues);
   }
 
-  componentDidUpdate(prevProps) {
-    if (!(this.props.contact.length === prevProps.contact.length)) {
-      const index = this.props.contact.length - 1
-      if (this.props.contact[index] === 1) {
-        this.props.history.push('/')
-      } else if (this.props.contact[index] === 2) {
-        this.setState({alertMsg: 'Nie udało się wysłać wiadomości, spróbuj ponownie'});
-      }
+  renderError({ error, touched }) {
+    if (touched && error) {
+      return (
+        <div className="error_container">
+          <p>{error}</p>
+        </div>
+      );
     }
   }
 
@@ -95,7 +96,7 @@ class Contact extends React.Component {
           { this.state.alertMsg ? <p className="error_box">{this.state.alertMsg}</p> : null }
         </div>
       </div>
-    )
+    );
   }
 }
 
@@ -132,8 +133,8 @@ const validate = formValues => {
     errors.email = 'E-mail powinien być dłuższy niż 6 znaków';
   } else if (formValues.email.length > 60) {
     errors.email = 'E-mail powinien być krótszy niż 60 znaków';
-  } else if (!/^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/.test(formValues.email)) {
-    errors.email = 'Niepoprawny adres e-mail'
+  } else if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(formValues.email)) {
+    errors.email = 'Niepoprawny adres e-mail';
   }
 
   if (!formValues.message) {
@@ -145,15 +146,29 @@ const validate = formValues => {
   }
 
   return errors;
-}
+};
+
+Contact.propTypes = {
+  sendEmail: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string.isRequired,
+    PropTypes.number.isRequired,
+    PropTypes.object.isRequired,
+    PropTypes.func.isRequired,
+  ])).isRequired,
+  contact: PropTypes.oneOfType([
+    PropTypes.array,
+  ]),
+};
 
 const MapStateToProps = state => {
-  return { contact: state.contact }
-}
+  return { contact: state.contact };
+};
 
 const formWrapped = reduxForm({
   form: 'contact',
-  validate
+  validate,
 })(Contact);
 
 export default connect(MapStateToProps, { sendEmail })(formWrapped);

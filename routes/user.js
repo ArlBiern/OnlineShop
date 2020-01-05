@@ -1,5 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
+
 const router = express.Router();
 const { User, validateUserRegistration } = require('../models/user');
 
@@ -29,14 +30,14 @@ router.post('/', async (req, res) => {
     address: req.body.address,
     postal_code: req.body.postal_code,
     city: req.body.city,
-    password: hashedPassword
+    password: hashedPassword,
   });
 
   await user.save();
 
-  res.status(200).send({
-    name: user.name
-  })
+  return res.status(200).send({
+    name: user.name,
+  });
 });
 
 module.exports = router;

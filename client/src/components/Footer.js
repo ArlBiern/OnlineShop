@@ -13,7 +13,7 @@ const Footer = () => {
         <Link to="/privacy">Polityka prywatności</Link>
       </div>
     </footer>
-  )
-}
+  );
+};
 
 export default Footer;

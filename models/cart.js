@@ -3,25 +3,25 @@ const Joi = require('@hapi/joi');
 
 const cartSchema = new mongoose.Schema({
   user: {
-    type: mongoose.Schema.Types.ObjectId, 
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: true,
   },
   items: [
     {
       product: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Product',
-        required: true
+        required: true,
       },
       quantity: {
         type: Number,
         min: 1,
         max: 10,
-        required: true
-      }
-    }
-  ]
+        required: true,
+      },
+    },
+  ],
 });
 
 const Cart = mongoose.model('Cart', cartSchema);
@@ -29,12 +29,12 @@ const Cart = mongoose.model('Cart', cartSchema);
 function validateCart(cart) {
   const schema = Joi.object({
     user: Joi.string(),
-    product: Joi.string().required(), 
-    quantity: Joi.number()
+    product: Joi.string().required(),
+    quantity: Joi.number(),
   });
 
   return schema.validate(cart);
-};
+}
 
 exports.Cart = Cart;
 exports.validateCart = validateCart;

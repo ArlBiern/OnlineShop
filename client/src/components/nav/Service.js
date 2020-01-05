@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Service = props => {
   return (
@@ -13,7 +14,13 @@ const Service = props => {
         Cena: {props.service.price}
       </div>
     </div>
-  )
-} 
+  );
+};
+
+Service.propTypes = {
+  service: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string.isRequired,
+  ])).isRequired,
+};
 
 export default Service;

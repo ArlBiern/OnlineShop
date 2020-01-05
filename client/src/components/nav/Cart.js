@@ -1,15 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchCart, deleteProduct, changeProductQuantity } from '../../actions/cartActions';
-import '../../styles/Cart.css'
+import '../../styles/Cart.css';
 
 class Cart extends React.Component {
   componentDidMount() {
     this.props.fetchCart();
   }
 
-  deleteFromCart = e => {
-    this.props.deleteProduct(e.currentTarget.value);
+  onClickBuy() {
+    alert('Deweloperska wersja strony');
   }
 
   changeQuantity = e => {
@@ -20,12 +21,12 @@ class Cart extends React.Component {
     }
   }
 
-  onClickBuy() {
-    alert('Deweloperska wersja strony');
+  deleteFromCart = e => {
+    this.props.deleteProduct(e.currentTarget.value);
   }
 
-  renderUserData () {
-    const user = this.props.cart.user;
+  renderUserData() {
+    const { user } = this.props.cart;
     if (this.props.cart.length !== 0) {
       return (
         <ul>
@@ -35,11 +36,11 @@ class Cart extends React.Component {
           <li>{user.email}</li>
           <li>{user.phone}</li>
         </ul>
-      ) 
-    } else {
-      return <p>W oczekiwaniu na dane</p>
+      );
     }
-  };
+
+    return <p>W oczekiwaniu na dane</p>;
+  }
 
   renderSum() {
     let sum = 0;
@@ -48,9 +49,9 @@ class Cart extends React.Component {
         return sum += (product.quantity * product.product.price);
       });
     } else {
-      sum = 0
+      sum = 0;
     }
-    return sum
+    return sum;
   }
 
   renderProductList() {
@@ -60,15 +61,16 @@ class Cart extends React.Component {
         return (
           <li key={product.product._id}>
             <span>{product.product.name}</span>
-            <span>ilość: <input onChange={this.changeQuantity} type="number" min="1" max="10" data-id={product.product._id} value={product.quantity}/></span>
+            <span>ilość: <input onChange={this.changeQuantity} type="number" min="1" max="20" data-id={product.product._id} value={product.quantity} /></span>
             <span>cena: {total_price}zł</span>
-            <button value={product.product._id} onClick={this.deleteFromCart}><img src="/img/trash.png" alt="ikona kosz usuń" /></button>
+            <button value={product.product._id} onClick={this.deleteFromCart} type="button" aria-label="Usuń">
+              <img src="/img/trash.png" alt="ikona kosz usuń" />
+            </button>
           </li>
-        )
+        );
       });
-    } else {
-      return <p>W oczekiwaniu na produkty</p>
     }
+    return <p>W oczekiwaniu na produkty</p>;
   }
 
   render() {
@@ -85,16 +87,26 @@ class Cart extends React.Component {
           </ul>
           <div>
             <p className="price">Suma: {this.renderSum()}zł</p>
-            <button className="main_button" onClick={this.onClickBuy}>Kup teraz</button>
+            <button className="main_button" onClick={this.onClickBuy} type="button" aria-label="Kup teraz">Kup teraz</button>
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
+Cart.propTypes = {
+  fetchCart: PropTypes.func.isRequired,
+  deleteProduct: PropTypes.func.isRequired,
+  changeProductQuantity: PropTypes.func.isRequired,
+  cart: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object,
+  ]),
+};
+
 const mapStateToProps = (state) => {
-  return { cart: state.cart }
-}
+  return { cart: state.cart };
+};
 
 export default connect(mapStateToProps, { fetchCart, deleteProduct, changeProductQuantity })(Cart);

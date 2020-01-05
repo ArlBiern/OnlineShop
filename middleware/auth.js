@@ -3,15 +3,13 @@ const config = require('config');
 
 module.exports = function (req, res, next) {
   const token = req.header('x-auth-token');
-  console.log(token);
-  if (!token) return res.status(401).json({ msg: 'Brak dostępu, musisz się zalogować'});
+  if (!token) return res.status(401).json({ msg: 'Brak dostępu, musisz się zalogować' });
 
   try {
     const decoded = jwt.verify(token, config.get('jwtPrivateKey'));
     req.user = decoded;
     next();
-  }
-  catch (ex) {
+  } catch (ex) {
     res.status(400).json({ msg: 'Nieprawidłowy token' });
   }
 };

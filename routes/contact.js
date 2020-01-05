@@ -1,9 +1,9 @@
 require('dotenv').config();
-
 const config = require('config');
 const express = require('express');
-const router = express.Router();
 const nodemailer = require('nodemailer');
+
+const router = express.Router();
 
 router.post('/', (req, res) => {
   const dateNow = new Date().toLocaleDateString();
@@ -32,37 +32,35 @@ router.post('/', (req, res) => {
     <p>${req.body.message}</p>
   `;
 
-  let transporter = nodemailer.createTransport({
+  const transporter = nodemailer.createTransport({
     /* service: 'gamil', */
     host: 'smtp.gmail.com',
     port: 465,
     secure: true,
     auth: {
       user: config.get('email.user')/* process.env.EMAIL */,
-      pass: config.get('email.pass')/* process.env.EMAIL_PASSWORD */
+      pass: config.get('email.pass')/* process.env.EMAIL_PASSWORD */,
     },
     /* tls: {
       rejectUnauthorized: false
     } */
   });
 
-  let message = {
+  const message = {
     from: config.get('email.user')/* process.env.EMAIL */,
     to: config.get('email.user')/* process.env.EMAIL */,
     subject: 'Kontakt ThinkTree dev',
     text: outputText,
-    html: outputHTML
-  }
+    html: outputHTML,
+  };
 
   transporter.sendMail(message, (error, info) => {
     if (error) {
-      console.log(error);
       return res.status(400).send(error);
-    } else {
-      console.log(info);
-      return res.status(200).send(info);
     }
-  })
+
+    return res.status(200).send(info);
+  });
 });
 
 module.exports = router;

@@ -13,7 +13,7 @@ const AboutUs = () => {
         <p>Quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui.</p>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default AboutUs;

@@ -5,7 +5,7 @@ const Delivery = () => {
     <div className="container">
       <h1>Dostawa</h1>
     </div>
-  )
-}
+  );
+};
 
 export default Delivery;
