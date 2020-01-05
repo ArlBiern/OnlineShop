@@ -6,7 +6,7 @@ module.exports = function (req, res, next) {
   if (!token) return res.status(401).json({ msg: 'Brak dostępu, musisz się zalogować' });
 
   try {
-    const decoded = jwt.verify(token, config.get('jwtPrivateKey'));
+    const decoded = jwt.verify(token, process.env.JWT_PRIVATEKEY);
     req.user = decoded;
     next();
   } catch (ex) {
