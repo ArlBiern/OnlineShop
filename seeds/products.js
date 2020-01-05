@@ -1,5 +1,4 @@
 const { Product, validateProduct } = require('../models/product');
-const mongoose = require('mongoose');
 
 const products = [
   {
@@ -16,7 +15,7 @@ const products = [
     montage: 'produkt nie wymaga montażu',
     color: 'jasny brąz, pinia',
     category: 'kuchnia, drewno, deska do krojenia',
-    media: 'in progress'
+    media: 'in progress',
   },
   {
     name: 'Kolczyki LUDEK marzyciel',
@@ -32,7 +31,7 @@ const products = [
     montage: 'produkt nie wymaga montażu',
     color: 'niebieski, błękitny, srebrny',
     category: 'ozdoby, witraż, kolczyki',
-    media: 'in progress'
+    media: 'in progress',
   },
   {
     name: 'Poduszka Chmurka',
@@ -48,7 +47,7 @@ const products = [
     montage: 'produkt nie wymaga montażu',
     color: 'biały, biel, szary, kratka, prążki',
     category: 'poduszka, dla dzieci, zabawka',
-    media: 'in progress'
+    media: 'in progress',
   },
   {
     name: 'Ramka na zdjęcia',
@@ -64,7 +63,7 @@ const products = [
     montage: 'produkt nie wymaga montażu',
     color: 'niebieski, błękit',
     category: 'ozdoby ścienne, ramka na zdjecia, drewno',
-    media: 'in progress'
+    media: 'in progress',
   },
   {
     name: 'Świecznik poduszka',
@@ -80,7 +79,7 @@ const products = [
     montage: 'produkt nie wymaga montażu',
     color: 'szary',
     category: 'beton, wystrój wnętrz',
-    media: 'in progress'
+    media: 'in progress',
   },
   {
     name: 'Szopka świąteczna',
@@ -96,7 +95,7 @@ const products = [
     montage: 'produkt nie wymaga montażu',
     color: 'jasny brąz, pinia, antracyt, szary',
     category: 'ozdoby świąteczne, szopka, drewno',
-    media: 'in progress'
+    media: 'in progress',
   },
   {
     name: 'Wieszak na klucze RETRO',
@@ -112,7 +111,7 @@ const products = [
     montage: 'produkt nie wymaga montażu',
     color: 'szary, biały, biel, srebrny',
     category: 'wystrój wnętrz, drewno, wieszak na klucze, retro',
-    media: 'in progress'
+    media: 'in progress',
   },
   {
     name: 'Wieszak na klucze',
@@ -128,7 +127,7 @@ const products = [
     montage: 'produkt nie wymaga montażu',
     color: 'jasny brąz, pinia, antracyt, szary',
     category: 'wystrój wnętrz, drewno, wieszak na klucze',
-    media: 'in progress'
+    media: 'in progress',
   },
   {
     name: 'Żyrandol Żarówka',
@@ -144,7 +143,7 @@ const products = [
     montage: 'produkt wysyłany w częściach do samodzielnego złożenia',
     color: 'tik, brązowy',
     category: 'wystrój wnętrz, drewno, żyrandol',
-    media: 'in progress'
+    media: 'in progress',
   },
   {
     name: 'Żyrandol Mozaika',
@@ -160,29 +159,29 @@ const products = [
     montage: 'w zestawie komplet haków, oraz łańcuchy do podwieszenia',
     color: 'niebieski, błękit, błękitny, szary, czerń, czarny, biel, biały, brąz, brązowy, mahoń',
     category: 'wystrój wnętrz, drewno, żyrandol',
-    media: 'in progress'
-  }
+    media: 'in progress',
+  },
 ];
 
 const seedProducts = () => {
-  Product.remove({}, (err) => {
-    if (err) {
-      console.log(err);
+  Product.remove({}, (er) => {
+    if (er) {
+      console.log(er);
     }
     console.log('products were removed');
-    products.forEach(product => {
+    products.forEach((product) => {
       const { error } = validateProduct(product);
-      if (error) {return console.log(error)};
-      Product.create(product, (err, createProduct) => {
+      if (error) { return console.log(error); }
+      return Product.create(product, (err, createProduct) => {
         if (err) {
           console.log(err);
         } else {
           console.log('product created');
           createProduct.save();
         }
-      })
-    })
-  })
+      });
+    });
+  });
 };
 
 module.exports = seedProducts;

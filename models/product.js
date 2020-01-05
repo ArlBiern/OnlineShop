@@ -6,25 +6,25 @@ const productSchema = new mongoose.Schema({
     type: String,
     minlength: 3,
     maxlength: 50,
-    required: true
+    required: true,
   },
   description: {
     type: String,
     minlength: 20,
     maxlength: 500,
-    required: true
+    required: true,
   },
   price: {
     type: Number,
-    required: true
+    required: true,
   },
   completion: {
     type: String,
-    required: true
+    required: true,
   },
   photo: {
     type: String,
-    required: true
+    required: true,
   },
   weight: String,
   height: String,
@@ -34,7 +34,7 @@ const productSchema = new mongoose.Schema({
   montage: String,
   color: String,
   category: String,
-  media: String
+  media: String,
 });
 
 const Product = mongoose.model('Product', productSchema);
@@ -54,11 +54,11 @@ function validateProduct(product) {
     montage: Joi.string(),
     color: Joi.string(),
     category: Joi.string(),
-    media: Joi.string()
+    media: Joi.string(),
   });
 
   return schema.validate(product);
-};
+}
 
 exports.Product = Product;
 exports.validateProduct = validateProduct;

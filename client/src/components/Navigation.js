@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
 import '../styles/Navigation.css';
 import { logoutUser } from '../actions/authActions';
@@ -26,16 +27,15 @@ class Navigation extends React.Component {
           <li><Link to="/login">Logowanie</Link></li>
         </ul>
       );
-    } else {
-      return (
-        <ul>
-          <li>Witaj <span>{this.props.user.name}</span></li>
-          <li><Link to="/cart" onClick={this.getCart} className="cart"><img src="/img/cart.png" alt="ikona koszyk" /></Link></li>
-          <li><Link to="/" onClick={this.handleLogout}>Wyloguj</Link></li>
-        </ul>
-      );
     }
-  };
+    return (
+      <ul>
+        <li>Witaj <span>{this.props.user.name}</span></li>
+        <li><Link to="/cart" onClick={this.getCart} className="cart"><img src="/img/cart.png" alt="ikona koszyk" /></Link></li>
+        <li><Link to="/" onClick={this.handleLogout}>Wyloguj</Link></li>
+      </ul>
+    );
+  }
 
   render() {
     return (
@@ -55,14 +55,24 @@ class Navigation extends React.Component {
         </div>
       </nav>
     );
-  };
+  }
+}
+
+Navigation.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+  fetchCart: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+  user: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+  ]),
 };
 
 const mapStateToProps = state => {
   return {
     user: state.auth.user,
     isAuthenticated: state.auth.isAuthenticated,
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps, { logoutUser, fetchCart })(Navigation);

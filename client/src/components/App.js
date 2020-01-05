@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Navigation from './Navigation';
 import Footer from './Footer';
 import AboutUs from './nav/AboutUs';
@@ -20,45 +21,48 @@ import Product from './Product';
 import { loadUser } from '../actions/authActions';
 import '../styles/App.css';
 
+
 class App extends React.Component {
   componentDidMount() {
     this.props.dispatch(loadUser());
   }
 
-  render () {
+  render() {
     return (
       <div className="App">
-      <BrowserRouter>
-        <div>
-          <Navigation />
-          <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/aboutUs" exact component={AboutUs} />
-            <Route path="/products" exact component={Shop} />
-            <Route path="/products/:id" exact component={Product} />
-            <Route path="/services" exact component={Services} />
-            <Route path="/contact" exact component={Contact} />
-            <Route path="/registration" exact component={Registration} />
-            <Route path="/cart" exact component={Cart} />
-            <Route path="/login" exact component={Login} />
-            <Route path="/delivery" exact component={Delivery} />
-            <Route path="/warranty" exact component={Warranty} />
-            <Route path="/regulations" exact component={Regulations} />
-            <Route path="/privacy" exact component={Privacy} />
-            <Route component={PageNotFound} />
-          </Switch>
-          <Footer />
-        </div>
-      </BrowserRouter>
+        <BrowserRouter>
+          <div>
+            <Navigation />
+            <Switch>
+              <Route path="/" exact component={Home} />
+              <Route path="/aboutUs" exact component={AboutUs} />
+              <Route path="/products" exact component={Shop} />
+              <Route path="/products/:id" exact component={Product} />
+              <Route path="/services" exact component={Services} />
+              <Route path="/contact" exact component={Contact} />
+              <Route path="/registration" exact component={Registration} />
+              <Route path="/cart" exact component={Cart} />
+              <Route path="/login" exact component={Login} />
+              <Route path="/delivery" exact component={Delivery} />
+              <Route path="/warranty" exact component={Warranty} />
+              <Route path="/regulations" exact component={Regulations} />
+              <Route path="/privacy" exact component={Privacy} />
+              <Route component={PageNotFound} />
+            </Switch>
+            <Footer />
+          </div>
+        </BrowserRouter>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    state: state
-  }
-}
+App.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  state,
+});
 
 export default connect(mapStateToProps)(App);

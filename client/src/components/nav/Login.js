@@ -1,5 +1,6 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loginUser, loadUser } from '../../actions/authActions';
 import '../../styles/Forms.css';
@@ -7,40 +8,12 @@ import '../../styles/Forms.css';
 class Login extends React.Component {
   state = { alertMsg: null }
 
-  renderError({ error, touched }) {
-    if (touched && error) {
-      return (
-        <div className="error_container">
-          <p>{error}</p>
-        </div>
-      )
-    }
-  }
-
-  renderInput = ({ input, placeholder, type, meta }) => {
-    return (
-      <div className="input_field">
-        {this.renderError(meta)}
-        <input 
-          {...input} 
-          placeholder={placeholder} 
-          type={type}
-          autoComplete="off"
-        />
-      </div>
-    )
-  }
-
-  onSubmit = formValues => {
-    this.props.loginUser(formValues);
-  }
-
   componentDidUpdate(prevProps) {
     const { appErrors, isAuthenticated } = this.props;
 
     if (appErrors !== prevProps.appErrors) {
       if (appErrors.id === 'LOGIN_FAIL') {
-        this.setState({ alertMsg: appErrors.msg.msg })
+        this.setState({ alertMsg: appErrors.msg.msg });
       }
     }
 
@@ -51,7 +24,35 @@ class Login extends React.Component {
       }
     }
   }
-  
+
+  renderInput = ({ input, placeholder, type, meta }) => {
+    return (
+      <div className="input_field">
+        {this.renderError(meta)}
+        <input
+          {...input}
+          placeholder={placeholder}
+          type={type}
+          autoComplete="off"
+        />
+      </div>
+    );
+  }
+
+  onSubmit = formValues => {
+    this.props.loginUser(formValues);
+  }
+
+  renderError({ error, touched }) {
+    if (touched && error) {
+      return (
+        <div className="error_container">
+          <p>{error}</p>
+        </div>
+      );
+    }
+  }
+
   render() {
     return (
       <div className="container">
@@ -83,7 +84,7 @@ class Login extends React.Component {
           </div>
         </form>
       </div>
-    )
+    );
   }
 }
 
@@ -96,8 +97,8 @@ const validate = formValues => {
     errors.email = 'E-mail powinien być dłuższy niż 6 znaków';
   } else if (formValues.email.length > 60) {
     errors.email = 'E-mail powinien być krótszy niż 60 znaków';
-  } else if (!/^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/.test(formValues.email)) {
-    errors.email = 'Niepoprawny adres e-mail'
+  } else if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(formValues.email)) {
+    errors.email = 'Niepoprawny adres e-mail';
   }
 
   if (!formValues.password) {
@@ -110,19 +111,39 @@ const validate = formValues => {
     errors.password = 'Hasło powinno mieć conajmniej jedną cyfrę, dużą literę oraz znak specjalny';
   }
 
-  return errors
-}
+  return errors;
+};
+
+Login.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  appErrors: PropTypes.shape({
+    msg: PropTypes.oneOfType([
+      PropTypes.string.isRequired,
+      PropTypes.object.isRequired,
+    ]),
+    id: PropTypes.string,
+  }).isRequired,
+  isAuthenticated: PropTypes.bool,
+  history: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string.isRequired,
+    PropTypes.number.isRequired,
+    PropTypes.object.isRequired,
+    PropTypes.func.isRequired,
+  ])).isRequired,
+};
 
 const mapStateToProps = state => {
   return {
     appErrors: state.error,
-    isAuthenticated: state.auth.isAuthenticated
-  }
+    isAuthenticated: state.auth.isAuthenticated,
+  };
 };
 
 const formWrapped = reduxForm({
   form: 'userLogin',
-  validate
+  validate,
 })(Login);
 
 export default connect(mapStateToProps, { loginUser })(formWrapped);

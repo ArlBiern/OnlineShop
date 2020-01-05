@@ -13,7 +13,7 @@ const AboutUs = () => {
         <img src="/img/Ariel.png" alt="ThinkTree Ariel" />
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default AboutUs;

@@ -6,15 +6,15 @@ export const sendEmail = formValues => dispatch => {
     .post('/contact', formValues)
     .then(res => {
       dispatch({
-        type: EMAIL_SUCCESS
-      })
+        type: EMAIL_SUCCESS,
+      });
     })
     .catch(err => {
       console.log(err);
       if (err) {
         dispatch({
-          type: EMAIL_FAIL
-        })
+          type: EMAIL_FAIL,
+        });
       }
     });
-}
+};

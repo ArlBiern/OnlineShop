@@ -1,5 +1,5 @@
 import streams from '../apis/streams';
-import { FETCH_PRODUCTS, FETCH_PRODUCT } from './types'
+import { FETCH_PRODUCTS, FETCH_PRODUCT } from './types';
 
 export const fetchProducts = () => async dispatch => {
   const response = await streams.get('/products');

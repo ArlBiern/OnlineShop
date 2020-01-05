@@ -1,19 +1,24 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { registerUser } from '../../actions/authActions';
 import '../../styles/Forms.css';
 
 class Registration extends React.Component {
-  state = { alertMsg: null}
+  state = { alertMsg: null }
 
-  renderError({ error, touched }) {
-    if (touched && error) {
-      return (
-        <div className="error_container">
-          <p>{error}</p>
-        </div>
-      )
+  componentDidUpdate(prevProps) {
+    const { appErrors, didRegister } = this.props;
+
+    if (appErrors !== prevProps.appErrors) {
+      if (appErrors.id === 'REGISTER_FAIL') {
+        this.setState({ alertMsg: appErrors.msg });
+      }
+    }
+
+    if (didRegister) {
+      this.props.history.push('/login');
     }
   }
 
@@ -21,31 +26,27 @@ class Registration extends React.Component {
     return (
       <div className="input_field">
         {this.renderError(meta)}
-        <input 
-          {...input} 
-          placeholder={placeholder} 
+        <input
+          {...input}
+          placeholder={placeholder}
           type={type}
           autoComplete="off"
         />
       </div>
-    )
+    );
   }
- 
+
   onSubmit = formValues => {
     this.props.registerUser(formValues);
   }
 
-  componentDidUpdate(prevProps) {
-    const { appErrors, didRegister } = this.props;
-    
-    if (appErrors !== prevProps.appErrors) {
-      if (appErrors.id === 'REGISTER_FAIL') {
-        this.setState({alertMsg: appErrors.msg})
-      }
-    } 
-
-    if (didRegister) {
-      this.props.history.push('/login')
+  renderError({ error, touched }) {
+    if (touched && error) {
+      return (
+        <div className="error_container">
+          <p>{error}</p>
+        </div>
+      );
     }
   }
 
@@ -136,13 +137,13 @@ class Registration extends React.Component {
           { this.state.alertMsg ? <p className="error_box">{this.state.alertMsg}</p> : null }
         </div>
       </div>
-    )
+    );
   }
 }
 
 const validate = formValues => {
   const errors = {};
-  
+
   if (!formValues.name) {
     errors.name = 'Proszę wprowadź swoje imię';
   } else if (formValues.name.length < 2) {
@@ -165,8 +166,8 @@ const validate = formValues => {
     errors.email = 'E-mail powinien być dłuższy niż 6 znaków';
   } else if (formValues.email.length > 60) {
     errors.email = 'E-mail powinien być krótszy niż 60 znaków';
-  } else if (!/^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/.test(formValues.email)) {
-    errors.email = 'Niepoprawny adres e-mail'
+  } else if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(formValues.email)) {
+    errors.email = 'Niepoprawny adres e-mail';
   }
 
   if (!formValues.phone) {
@@ -188,7 +189,7 @@ const validate = formValues => {
   if (!formValues.postal_code) {
     errors.postal_code = 'Proszę wprowadź kod pocztowy';
   } else if (!/^([0-9]{2})(-[0-9]{3})?$/.test(formValues.postal_code)) {
-    errors.postal_code = 'Niepoprawny kod pocztowy'
+    errors.postal_code = 'Niepoprawny kod pocztowy';
   }
 
   if (!formValues.city) {
@@ -216,18 +217,37 @@ const validate = formValues => {
   }
 
   return errors;
-}
+};
+
+Registration.propTypes = {
+  registerUser: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  appErrors: PropTypes.shape({
+    msg: PropTypes.oneOfType([
+      PropTypes.string.isRequired,
+      PropTypes.object.isRequired,
+    ]),
+    id: PropTypes.string,
+  }).isRequired,
+  didRegister: PropTypes.bool,
+  history: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string.isRequired,
+    PropTypes.number.isRequired,
+    PropTypes.object.isRequired,
+    PropTypes.func.isRequired,
+  ])).isRequired,
+};
 
 const mapStateToProps = state => {
   return {
     didRegister: state.auth.didRegister,
-    appErrors: state.error
-  }
+    appErrors: state.error,
+  };
 };
 
 const formWrapped = reduxForm({
   form: 'userRegistration',
-  validate
+  validate,
 })(Registration);
 
 export default connect(mapStateToProps, { registerUser })(formWrapped);
