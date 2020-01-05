@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const config = require('config');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 
@@ -32,7 +33,7 @@ winston.add(new winston.transports.File({
   handleExceptions: true,
 }));
 
-const connectionString = `mongodb://${config.get('db.user')}:${config.get('db.password')}@${config.get('db.address')}/${config.get('db.name')}`;
+const connectionString = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_DATABASE_ADDRESS}/${process.env.DB_DATABASE_NAME}`;
 mongoose.connect(connectionString, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -66,6 +67,15 @@ app.use('/cart', cart);
 app.use('/contact', contact);
 
 app.use(error);
+
+// Serve static assets (production)
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+  }); 
+}
 
 const port = process.env.PORT || 5000;
 

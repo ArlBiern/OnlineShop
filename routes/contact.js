@@ -38,8 +38,8 @@ router.post('/', (req, res) => {
     port: 465,
     secure: true,
     auth: {
-      user: config.get('email.user')/* process.env.EMAIL */,
-      pass: config.get('email.pass')/* process.env.EMAIL_PASSWORD */,
+      user: process.env.EMAIL,
+      pass: process.env.EMAIL_PASSWORD,
     },
     /* tls: {
       rejectUnauthorized: false
@@ -47,8 +47,8 @@ router.post('/', (req, res) => {
   });
 
   const message = {
-    from: config.get('email.user')/* process.env.EMAIL */,
-    to: config.get('email.user')/* process.env.EMAIL */,
+    from: process.env.EMAIL,
+    to: process.env.EMAIL,
     subject: 'Kontakt ThinkTree dev',
     text: outputText,
     html: outputHTML,
