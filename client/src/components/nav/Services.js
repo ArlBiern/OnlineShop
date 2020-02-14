@@ -148,7 +148,7 @@ class Services extends React.Component {
               <h2 className="gallery-3d-title">Tytuł</h2>
               <p className="gallery-3d-text" />
               <p className="gallery-3d-price" />
-              <Link to="/contact" className="main_button">Kontakt</Link>
+              <Link to={service.link} className="main_button">Czytaj więcej</Link>
             </div>
           </div>
         </div>
