@@ -4,6 +4,7 @@
 
 .paintings .desc_container p {
   text-align: center;
+  font-size: 1em;
 }
 
 .paintings h3 {
@@ -13,8 +14,16 @@
   border-bottom: 1px solid var(--details);
 }
 
+.paintings .elementContact {
+  margin: 20px 0;
+  padding: 20px;
+  border-top: 1px solid var(--details);
+  border-bottom: 1px solid var(--details);
+}
+
 .paintings table * {
   padding: 10px 0;
+  font-size: 14px;
 }
 
 .paintings td:last-of-type {
@@ -44,25 +53,17 @@
   position: absolute;
   height: 100%;
   background-size: var(--width) var(--height);
-  background: url('/img/services/color.jpg');
 }
 
 .basic {
   left: 0;
   background-position: center left;
   width: 100%;
-}
-
-.grey {
-  background: url('/img/services/grey.jpg');
-}
-
-.sepia {
-  background: url('/img/services/sepia.jpg');
-  display: none;
+  background: url('/img/services/color.jpg');
 }
 
 .choosenImg {
+  background: var(--img, url('/img/services/grey.jpg'));
   right: 0;
   width: calc(100% - var(--x, 50%));
   background-position: center right;
