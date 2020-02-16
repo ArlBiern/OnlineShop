@@ -1,0 +1,97 @@
+.paintings .desc_container {
+  padding: 4%;
+}
+
+.paintings .desc_container p {
+  text-align: center;
+  font-size: 1em;
+}
+
+.paintings h3 {
+  width: 60%;
+  margin: 3% auto;
+  text-align: center;
+  border-bottom: 1px solid var(--details);
+}
+
+.paintings .elementContact {
+  margin: 20px 0;
+  padding: 20px;
+  border-top: 1px solid var(--details);
+  border-bottom: 1px solid var(--details);
+}
+
+.paintings table * {
+  padding: 10px 0;
+  font-size: 14px;
+}
+
+.paintings td:last-of-type {
+  text-align: center;
+  min-width: 100px;
+}
+
+/* Image swap */
+.imgBox {
+  text-align: center;
+}
+
+.imgSwapBox {
+  --width: 425px;
+  --height: 567px;
+
+  position: relative;
+  width: var(--width);
+  height: var(--height);
+  overflow: hidden;
+  margin: 20px auto 0;
+  outline: 2px solid var(--details);
+  outline-offset: 5px;
+}
+
+.imgSwap {
+  position: absolute;
+  height: 100%;
+  background-size: var(--width) var(--height);
+}
+
+.basic {
+  left: 0;
+  background-position: center left;
+  width: 100%;
+  background: url('/img/services/color.jpg');
+}
+
+.choosenImg {
+  background: var(--img, url('/img/services/grey.jpg'));
+  right: 0;
+  width: calc(100% - var(--x, 50%));
+  background-position: center right;
+  box-shadow: inset 1px 0 0 var(--details), -1px 0 0 var(--details);
+}
+
+/* RWD */
+@media (max-width: 800px) {
+  .paintings .desc_container {
+    width: 90%;
+  }
+}
+
+@media (max-width: 700px) {
+  .paintings .desc_container {
+    width: 100%;
+  }
+  .imgSwapBox {
+    --width: 250px;
+    --height: 334px;
+  }
+  .imgSwap {
+    background-size: cover;
+  }
+}
+
+@media (max-width: 500px) {
+  .paintings .elementContact .main_button {
+    display: block;
+  }
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+/* import { Link } from 'react-router-dom'; */
 import PropTypes from 'prop-types';
 import { getServices } from '../../actions/servicesActions';
 import Service from './Service';
@@ -148,7 +148,7 @@ class Services extends React.Component {
               <h2 className="gallery-3d-title">Tytuł</h2>
               <p className="gallery-3d-text" />
               <p className="gallery-3d-price" />
-              <Link to="/contact" className="main_button">Kontakt</Link>
+              {/* <Link to="/services/custom_paintings" className="main_button">Czytaj więcej</Link> */}
             </div>
           </div>
         </div>

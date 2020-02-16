@@ -11,6 +11,7 @@ import Home from './nav/Home';
 import Login from './nav/Login';
 import Registration from './nav/Registration';
 import Services from './nav/Services';
+import CustomPaintings from './services/CustomPaintings';
 import Shop from './nav/Shop';
 import Delivery from './footer/Delivery';
 import Privacy from './footer/Privacy';
@@ -39,6 +40,7 @@ class App extends React.Component {
               <Route path="/products" exact component={Shop} />
               <Route path="/products/:id" exact component={Product} />
               <Route path="/services" exact component={Services} />
+              <Route path="/services/custom_paintings" exact component={CustomPaintings} />
               <Route path="/contact" exact component={Contact} />
               <Route path="/registration" exact component={Registration} />
               <Route path="/cart" exact component={Cart} />
