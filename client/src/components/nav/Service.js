@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const Service = props => {
   return (
@@ -13,6 +14,7 @@ const Service = props => {
       <div className="element-price">
         Cena: {props.service.price}
       </div>
+      <Link to={props.service.link} className="main_button">Czytaj więcej</Link>
     </div>
   );
 };
