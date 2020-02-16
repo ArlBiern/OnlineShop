@@ -69,3 +69,29 @@
   background-position: center right;
   box-shadow: inset 1px 0 0 var(--details), -1px 0 0 var(--details);
 }
+
+/* RWD */
+@media (max-width: 800px) {
+  .paintings .desc_container {
+    width: 90%;
+  }
+}
+
+@media (max-width: 700px) {
+  .paintings .desc_container {
+    width: 100%;
+  }
+  .imgSwapBox {
+    --width: 250px;
+    --height: 334px;
+  }
+  .imgSwap {
+    background-size: cover;
+  }
+}
+
+@media (max-width: 500px) {
+  .paintings .elementContact .main_button {
+    display: block;
+  }
+}

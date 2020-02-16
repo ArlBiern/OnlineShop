@@ -15,6 +15,13 @@ class CustomPaintings extends React.Component {
     this.element.current.style.setProperty('--x', horizontal + '%');
   }
 
+  touchMove = (e) => {
+    const el = document.querySelector('.basic');
+    const size = el.getBoundingClientRect();
+    const horizontal = ((e.touches[0].clientX - size.x) / size.width) * 100;
+    this.element.current.style.setProperty('--x', horizontal + '%');
+  }
+
   onChangeStyleClick = (e) => {
     const color = e.currentTarget.dataset.style;
     const img = document.querySelector('.choosenImg');
@@ -59,8 +66,8 @@ class CustomPaintings extends React.Component {
             <button className="main_button" onClick={this.onChangeStyleClick} data-style="grey">odcienie szarości</button>
             <button className="main_button" onClick={this.onChangeStyleClick} data-style="sepia">sepia</button>
             <div className="imgSwapBox">
-              <div className="imgSwap basic" ref={this.element} onMouseMove={this.mouseMove}></div>
-              <div className="imgSwap choosenImg" ref={this.element} onMouseMove={this.mouseMove}></div>
+              <div className="imgSwap basic" ref={this.element} onMouseMove={this.mouseMove} onTouchMove={this.touchMove}></div>
+              <div className="imgSwap choosenImg" ref={this.element} onMouseMove={this.mouseMove} onTouchMove={this.touchMove}></div>
             </div>
           </div>
           <p className="elementContact">

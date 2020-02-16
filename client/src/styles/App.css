@@ -23,7 +23,7 @@ body {
   color: var(--main_font_color);
   min-height: 100vh;
   background-image: linear-gradient(90deg, var(--main_background), var(--light_shadow), var(--main_background));
-  min-width: 320px;
+  min-width: 350px;
 }
 
 h1 {
