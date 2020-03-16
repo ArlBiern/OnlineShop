@@ -23,3 +23,4 @@ export const EMAIL_FAIL = 'EMAIL_FAIL';
 
 // Cart
 export const FETCH_CART = 'FETCH_CART';
+export const SET_DELIVERY = 'SET_DELIVERY';

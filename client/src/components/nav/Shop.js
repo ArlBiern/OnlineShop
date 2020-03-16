@@ -13,6 +13,7 @@ class Shop extends React.Component {
 
   componentDidMount() {
     this.props.fetchProducts();
+    console.log('products/shop component did mount');
   }
 
   componentDidUpdate(prevProps) {

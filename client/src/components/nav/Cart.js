@@ -3,16 +3,28 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchCart, deleteProduct, changeProductQuantity } from '../../actions/cartActions';
 import '../../styles/Cart.css';
+import Delivery from './cartComponents/Delivery';
+import Payment from './cartComponents/Payment';
+import OrderSummary from './cartComponents/OrderSummary';
 
 class Cart extends React.Component {
-  componentDidMount() {
+  componentDidUpdate(prevProps) {
     if (this.props.state.auth.isAuthenticated) {
-      this.props.fetchCart();
+      if (this.props.state.cart.length === 0) {
+       this.props.fetchCart();
+      }
     }
   }
 
-  onClickBuy() {
-    alert('Deweloperska wersja strony');
+  onClickBuy(e) {
+    const cartOrder = document.querySelector('.cart_order');
+    cartOrder.classList.toggle('order_visible');
+    
+    if (e.target.innerText === "PRZEJDŹ DO ZAMÓWIENIA") {
+      e.target.innerText = "UKRYJ OPCJE ZAMÓWIENIA";
+    } else {
+      e.target.innerText = "PRZEJDŹ DO ZAMÓWIENIA";
+    }
   }
 
   changeQuantity = e => {
@@ -77,23 +89,38 @@ class Cart extends React.Component {
     return <p>W oczekiwaniu na produkty</p>;
   }
 
+  renderDelivery() {
+    if (this.props.state.cart.user) {
+      return (
+        <div className="cart_order">
+          <Delivery />
+          <Payment />
+          <OrderSummary />
+        </div>
+      )
+    }
+  }
+
   render() {
     return (
       <div className="container cart">
-        <div className="user_data">
-          <h3>Twoje dane</h3>
-          {this.renderUserData()}
-        </div>
-        <div className="user_products">
-          <h3>Twoje produkty</h3>
-          <ul>
-            {this.renderProductList()}
-          </ul>
-          <div>
-            <p className="price">Suma: {this.renderSum()}zł</p>
-            <button className="main_button" onClick={this.onClickBuy} type="button" aria-label="Kup teraz">Kup teraz</button>
+        <div className="cart_mainView">
+          <div className="user_data">
+            <h3>Twoje dane</h3>
+            {this.renderUserData()}
+          </div>
+          <div className="user_products">
+            <h3>Twoje produkty</h3>
+            <ul>
+              {this.renderProductList()}
+            </ul>
+            <div>
+              <p className="price">Suma: {this.renderSum()}zł</p>
+              <button className="main_button" onClick={this.onClickBuy} type="button" aria-label="Przejdź do zamówienia">Przejdź do zamówienia</button>
+            </div>
           </div>
         </div>
+        {this.renderDelivery()}
       </div>
     );
   }
