@@ -3,12 +3,15 @@ import { connect } from 'react-redux';
 
 class OrderSummary extends React.Component {
 
+  onClick() {
+    console.log("Zamówiłeś produkty")
+  }
+
   render() {
     return (
       <div className="order_summary">
         <h3>Podsumowanie</h3>
         <div className="summary_delivery">
-          <h4>Dane dostawy</h4>
           <table>
             <tbody>
               <tr>
@@ -20,7 +23,7 @@ class OrderSummary extends React.Component {
                 <td>{this.props.deliveryData.name}</td>
               </tr>
               <tr>
-                <td>Ulica i nr domu:</td>
+                <td>Ulica i nr:</td>
                 <td>{this.props.deliveryData.address}</td>
               </tr>
               <tr>
@@ -42,10 +45,11 @@ class OrderSummary extends React.Component {
             </tbody>
           </table>
         </div>
-        <div className="summary_payment">
-        </div> 
         <div className="summary_price">
-
+          <h4>Całkowity koszt</h4>
+        </div> 
+        <div className="summary_button">
+          <button className="main_button" onClick={this.onClickBuy} type="button" aria-label="Przejdź do zamówienia">Zamawiam</button>
         </div>
       </div>
     )

@@ -6,8 +6,12 @@ const router = express.Router();
 
 // Get cart
 router.get('/', auth, async (req, res) => {
-  const cart = await Cart.findOne({ user: req.user._id }).populate({ path: 'user', select: 'name surname address postal_code city phone email' }).populate({ path: 'items.product', select: 'name price' });
+  const cart = await Cart.findOne({ user: req.user._id }).populate({ path: 'user', select: 'name surname address postal_code city phone email' }).populate({ path: 'items.product', select: 'name price orderOptions' });
   if (!cart) return res.status(404).json({ msg: 'Szukany koszyk nie istnieje' });
+
+  /* let newCart = [...cart];
+  newCart["test"] = "aaaa";
+  console.log(newCart); */
 
   return res.status(200).send(cart);
 });

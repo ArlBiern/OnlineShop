@@ -5,11 +5,24 @@ import { fetchCart } from '../../../actions/cartActions';
 import { setDelivery } from '../../../actions/deliveryActions';
 
 class Delivery extends React.Component {
-  state = { inpostAddress: {
-    chosen: false,
-    address: '',
-    postal_code: '',
-    city: ''
+  state = { 
+    inpostAddress: {
+      chosen: false,
+      address: '',
+      postal_code: '',
+      city: ''
+    }, 
+    deliveryPrices: {
+      'Kurier': 0,
+      'Dostawa osobista': 0, 
+      'Paczkomat Inpost': 0
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props !== prevProps) {
+      this.displayPossibleDelivery();
+      console.log('component did update')
     }
   }
  
@@ -27,8 +40,10 @@ class Delivery extends React.Component {
 
     this.inpostRadioSelection();
     this.inpostMapSelection();
+    ///this.displayPossibleDelivery()
   };
 
+  // Save to props address of chosen "paczkomat"
   inpostMapSelection() {
     const inpost = document.querySelector('#easypack-map');
 
@@ -54,6 +69,7 @@ class Delivery extends React.Component {
     })
   }
 
+  // Change visibility of fields depeneding on radio selection
   inpostRadioSelection() {
     const inpostRadio = document.querySelectorAll('.delivery_radio label');
     const deliveryInputFields = document.querySelector('.delivery_address');
@@ -70,7 +86,8 @@ class Delivery extends React.Component {
     }))
   }
 
-  renderInput = ({ input, placeholder, type, meta }) => {
+  // Input render for redux-form
+  renderInput = ({ input, placeholder, type, meta, disabled }) => {
     return (
       <div className="input_field">
         {this.renderError(meta)}
@@ -79,11 +96,125 @@ class Delivery extends React.Component {
           placeholder={placeholder}
           type={type}
           autoComplete="off"
+          disabled={disabled}
         />
       </div>
     );
-  }
+  };
 
+  /* sumDeliveryPrice = (type, possible, priceOptions, quantity) => {
+    let deliveryPrices = {
+      'Kurier': 0,
+      'Dostawa osobista': 0, 
+      'Paczkomat Inpost': 0
+    }
+
+    if (possible) {
+      for (let i = 0; i < priceOptions.length; i++) {
+        if (quantity <= priceOptions[i].packageCount) {
+          deliveryPrices[type] += priceOptions[i].totalCost;
+        }
+      }
+    };
+
+  } */
+
+
+  // Render delivery options radio fields and do the price calculation
+  renderRadioInput() {
+    let allItems = this.props.cart.items;
+    const deliveryOptions = {
+      'Kurier': true,
+      'Dostawa osobista': true, 
+      'Paczkomat Inpost': true
+    }
+    let notPossible = [];
+
+    // Searching delivery limitations and calculatin the final price
+    let deliveryPrices = {
+      'Kurier': 0,
+      'Dostawa osobista': 0, 
+      'Paczkomat Inpost': 0
+    }
+
+    const sumDeliveryPrice = (type, possible, priceOptions, quantity) => {
+      if (possible) {
+        for (let i = 0; i < priceOptions.length; i++) {
+          if (quantity <= priceOptions[i].packageCount) {
+            deliveryPrices[type] += priceOptions[i].totalCost;
+          }
+        }
+      };
+    }
+
+    allItems.forEach(item => {
+      item.product.orderOptions.forEach(option => {
+        sumDeliveryPrice(option.type, option.possible, option.price, item.quantity);
+        if (option.possible === false ) {
+          notPossible.push({product: item.product.name, type: option.type});
+          deliveryOptions[`${option.type}`] = false;
+        }
+      });
+    });
+    
+    /* this.setState({
+      ...this.state, 
+      deliveryPrices: deliveryPrices
+    }); */
+
+    console.log(deliveryPrices);
+
+    return (
+      <div className="delivery_radio">
+        <label>
+          <Field
+            name="delivery_method" 
+            component={this.renderInput} 
+            type="radio" 
+            value="Kurier"
+            disabled={!deliveryOptions['Kurier']}/>
+            <div className="deliveryDescription">
+              <span>Dostawa kurierem</span> 
+              <span className="deliveryPrice">{this.state.deliveryPrices['Kurier'].toFixed(2)} zł</span>
+            </div>  
+        </label>
+        <label>
+          <Field 
+            name="delivery_method" 
+            component={this.renderInput} 
+            type="radio" 
+            value="Dostawa osobista"
+            disabled={!deliveryOptions['Dostawa osobista']}/> 
+            <div className="deliveryDescription">
+              <span>Dostawa Warszawa</span>
+              <span className="deliveryPrice">15.00 zł</span>
+            </div>
+        </label>
+        <label>
+          <Field 
+            name="delivery_method" 
+            component={this.renderInput}
+            type="radio" 
+            value="Paczkomat Inpost"
+            disabled={!deliveryOptions['Paczkomat Inpost']}/>
+            <div className="deliveryDescription">
+              <span>Paczkomat inpost</span> 
+              <span className="deliveryPrice">{this.state.deliveryPrices['Paczkomat Inpost'].toFixed(2)} zł</span>
+            </div>
+        </label>
+      </div>
+    )
+  } 
+  
+  // Displaying only possible option of delivery  
+  displayPossibleDelivery() {
+    const radios = document.querySelector('.delivery_radio');
+    const disabledInputs = radios.querySelectorAll('input[disabled]');
+
+    [...disabledInputs].forEach( input => input.parentElement.parentElement.style.display = "none");
+  } 
+
+  // Rendering error of redux-form
   renderError({ error, touched }) {
     if (touched && error) {
       return (
@@ -94,6 +225,7 @@ class Delivery extends React.Component {
     }
   }
 
+  // Submiting chosen delivery options
   onSubmit = formValues => {
     if (formValues.delivery_method === 'Paczkomat Inpost') {
       if (this.state.inpostAddress.chosen === false) {
@@ -117,42 +249,19 @@ class Delivery extends React.Component {
   }
 
   render () {
+    console.log('delivery renders');
     return (
       <div className="order_address">
         <h3>Adres dostawy</h3> 
-        <h5>Wybierz jedną z dostepnych opcji, wpisz adres lub wybierz paczkomat. Zweryfikuj wprwodzone dane w podsumowaniu</h5>
+        <h5>Wybierz jedną z dostępnych opcji, wpisz adres lub wybierz paczkomat. Zweryfikuj wprowadzone dane w podsumowaniu.</h5>
+        <p>W przypadku zamówienia różnych produktów zachęcamy do kontaktu bezpośredniego w celu indywidualnej wyceny dostawy.</p>
         <div className="order_address_details">
           <div className="courier_container">
             <form 
               onSubmit={this.props.handleSubmit(this.onSubmit)} 
               className="user_form"
             >
-              <div className="delivery_radio">
-                <label>
-                  <Field
-                    name="delivery_method" 
-                    component={this.renderInput} 
-                    type="radio" 
-                    value="Kurier"/> 
-                    Dostawa kurierem
-                </label>
-                <label>
-                  <Field 
-                    name="delivery_method" 
-                    component={this.renderInput} 
-                    type="radio" 
-                    value="Dostawa osobista"/> 
-                    Dostawa osobista na terenie Warszawy
-                </label>
-                <label>
-                  <Field 
-                    name="delivery_method" 
-                    component={this.renderInput}
-                    type="radio" 
-                    value="Paczkomat Inpost"/> 
-                    Paczkomat inpost
-                </label>
-              </div>
+              {this.renderRadioInput()}
               <div className="inpost_container">
                 <div id="easypack-map"></div>
                 <h5>Po wybraniu paczkomatu zatwierdź wybór</h5>
@@ -280,6 +389,7 @@ const validate = formValues => {
 const mapStateToProps = (state) => {
   return {
     user: state.cart.user,
+    cart: state.cart,
     initialValues: {
       name: `${state.cart.user.name} ${state.cart.user.surname}`, 
       address: state.cart.user.address,

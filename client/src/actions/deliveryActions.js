@@ -5,4 +5,5 @@ export const setDelivery = (deliveryData) => {
     type: SET_DELIVERY,
     data: deliveryData
   }
-}
+};
+

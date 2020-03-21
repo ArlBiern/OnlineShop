@@ -9,6 +9,7 @@ import { fetchCart } from '../actions/cartActions';
 class Navigation extends React.Component {
   handleLogout = () => {
     this.props.logoutUser();
+    window.location.reload(false);
   }
 
   getCart = () => {

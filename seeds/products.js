@@ -6,6 +6,58 @@ const products = [
     description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.',
     price: 299,
     completion: '2-3 tygodnie plus czas dostawy',
+    orderOptions: [
+      {
+        type: 'Kurier',
+        possible: true, 
+        price: [
+          {
+            packageCount: 1,
+            totalCost: 17.00, 
+          },
+          {
+            packageCount: 2,
+            totalCost: 17.99, 
+          },
+          {
+            packageCount: 5,
+            totalCost: 18.99, 
+          },
+          {
+            packageCount: 10,
+            totalCost: 21.99, 
+          },
+        ],
+      },
+      {
+        type: 'Dostawa osobista',
+        possible: true,
+        price: [
+          {
+            packageCount: 10,
+            totalCost: 15.00,
+          }
+      ]
+      }, 
+      {
+        type: 'Paczkomat Inpost',
+        possible: true,
+        price: [
+          {
+            packageCount: 4,
+            totalCost: 12.99, 
+          },
+          {
+            packageCount: 8,
+            totalCost: 13.99, 
+          },
+          {
+            packageCount: 10,
+            totalCost: 15.99, 
+          },
+        ],
+      },  
+    ],
     photo: '/img/products/deska_do_krojenia_end_grain.png',
     weight: '1kg',
     height: '3cm',
@@ -22,6 +74,38 @@ const products = [
     description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.',
     price: 49,
     completion: '1 tydzień plus czas dostawy',
+    orderOptions: [
+      {
+        type: 'Kurier',
+        possible: true,
+        price: [
+          {
+            packageCount: 10,
+            totalCost: 17.00, 
+          },
+        ],
+      },
+      {
+        type: 'Dostawa osobista',
+        possible: true,
+        price: [
+          {
+            packageCount: 10,
+            totalCost: 15.00,
+          }
+      ]
+      }, 
+      {
+        type: 'Paczkomat Inpost',
+        possible: true,
+        price: [
+          {
+            packageCount: 10,
+            totalCost: 12.99, 
+          },
+        ],
+      },  
+    ],
     photo: '/img/products/kolczyki_ludek.png',
     weight: '10g',
     height: 'nd',
@@ -38,6 +122,62 @@ const products = [
     description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.',
     price: 99,
     completion: '1 tydzień plus czas dostawy',
+    orderOptions: [
+      {
+        type: 'Kurier',
+        possible: true,
+        price: [
+          {
+            packageCount: 1,
+            totalCost: 17.00, 
+          },
+          {
+            packageCount: 2,
+            totalCost: 17.99, 
+          },
+          {
+            packageCount: 5,
+            totalCost: 18.99, 
+          },
+          {
+            packageCount: 10,
+            totalCost: 21.99, 
+          },
+        ],
+      },
+      {
+        type: 'Dostawa osobista',
+        possible: true,
+        price: [
+          {
+            packageCount: 10,
+            totalCost: 15.00,
+          }
+      ]
+      }, 
+      {
+        type: 'Paczkomat Inpost',
+        possible: true,
+        price: [
+          {
+            packageCount: 2,
+            totalCost: 12.99, 
+          },
+          {
+            packageCount: 4,
+            totalCost: 13.99, 
+          },
+          {
+            packageCount: 8,
+            totalCost: 15.99, 
+          },
+          {
+            packageCount: 10,
+            totalCost: 28.98, 
+          },
+        ],
+      },  
+    ],
     photo: '/img/products/poduszka_chmurka.png',
     weight: '100g',
     height: 'nd',
@@ -54,6 +194,50 @@ const products = [
     description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.',
     price: 29,
     completion: '1 tydzień plus czas dostawy',
+    orderOptions: [
+      {
+        type: 'Kurier',
+        possible: true,
+        price: [
+          {
+            packageCount: 4,
+            totalCost: 17.00, 
+          },
+          {
+            packageCount: 8,
+            totalCost: 17.99, 
+          },
+          {
+            packageCount: 10,
+            totalCost: 18.99, 
+          },
+        ],
+      },
+      {
+        type: 'Dostawa osobista',
+        possible: true,
+        price: [
+          {
+            packageCount: 10,
+            totalCost: 15.00,
+          }
+      ]
+      }, 
+      {
+        type: 'Paczkomat Inpost',
+        possible: true,
+        price: [
+          {
+            packageCount: 4,
+            totalCost: 12.99, 
+          },
+          {
+            packageCount: 10,
+            totalCost: 13.99, 
+          },
+        ],
+      },  
+    ],
     photo: '/img/products/ramka_na_zdjecie.png',
     weight: '200g',
     height: 'nd',
@@ -70,6 +254,46 @@ const products = [
     description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.',
     price: 19,
     completion: '1 tydzień plus czas dostawy',
+    orderOptions: [
+      {
+        type: 'Kurier',
+        possible: true,
+        price: [
+          {
+            packageCount: 3,
+            totalCost: 17.00, 
+          },
+          {
+            packageCount: 6,
+            totalCost: 17.99, 
+          },
+          {
+            packageCount: 10,
+            totalCost: 18.99, 
+          },
+        ],
+      },
+      {
+        type: 'Dostawa osobista',
+        possible: true,
+        price: [
+          {
+            packageCount: 10,
+            totalCost: 15.00,
+          }
+      ]
+      }, 
+      {
+        type: 'Paczkomat Inpost',
+        possible: true,
+        price: [
+          {
+            packageCount: 10,
+            totalCost: 12.99, 
+          },
+        ],
+      },  
+    ],
     photo: '/img/products/swiecznik_poduszka_beton.png',
     weight: '300g',
     height: '2cm',
@@ -86,6 +310,86 @@ const products = [
     description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.',
     price: 499,
     completion: '2-4 tygodnie plus czas dostawy',
+    orderOptions: [
+      {
+        type: 'Kurier',
+        possible: true,
+        price: [
+          {
+            packageCount: 1,
+            totalCost: 17.00, 
+          },
+          {
+            packageCount: 2,
+            totalCost: 17.99, 
+          },
+          {
+            packageCount: 5,
+            totalCost: 18.99, 
+          },
+          {
+            packageCount: 10,
+            totalCost: 21.99, 
+          },
+        ],
+      },
+      {
+        type: 'Dostawa osobista',
+        possible: true,
+        price: [
+          {
+            packageCount: 10,
+            totalCost: 15.00,
+          }
+      ]
+      }, 
+      {
+        type: 'Paczkomat Inpost',
+        possible: true,
+        price: [
+          {
+            packageCount: 1,
+            totalCost: 15.99, 
+          },
+          {
+            packageCount: 2,
+            totalCost: 31.98, 
+          },
+          {
+            packageCount: 3,
+            totalCost: 47.97, 
+          },
+          {
+            packageCount: 4,
+            totalCost: 63.96, 
+          },
+          {
+            packageCount: 5,
+            totalCost: 79.95, 
+          },
+          {
+            packageCount: 6,
+            totalCost: 95.94, 
+          },
+          {
+            packageCount: 7,
+            totalCost: 111.93, 
+          },
+          {
+            packageCount: 8,
+            totalCost: 127.92, 
+          },
+          {
+            packageCount: 9,
+            totalCost: 143.91, 
+          },
+          {
+            packageCount: 10,
+            totalCost: 159.90, 
+          }
+        ],
+      },  
+    ],
     photo: '/img/products/szopka_swiateczna.png',
     weight: '2kg',
     height: '40cm',
@@ -102,6 +406,58 @@ const products = [
     description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.',
     price: 149,
     completion: '1-2 tygodnie plus czas dostawy',
+    orderOptions: [
+      {
+        type: 'Kurier',
+        possible: true,
+        price: [
+          {
+            packageCount: 1,
+            totalCost: 17.00, 
+          },
+          {
+            packageCount: 2,
+            totalCost: 17.99, 
+          },
+          {
+            packageCount: 5,
+            totalCost: 18.99, 
+          },
+          {
+            packageCount: 10,
+            totalCost: 21.99, 
+          },
+        ],
+      },
+      {
+        type: 'Dostawa osobista',
+        possible: true,
+        price: [
+          {
+            packageCount: 10,
+            totalCost: 15.00,
+          }
+      ]
+      }, 
+      {
+        type: 'Paczkomat Inpost',
+        possible: true,
+        price: [
+          {
+            packageCount: 4,
+            totalCost: 12.99, 
+          },
+          {
+            packageCount: 8,
+            totalCost: 13.99, 
+          },
+          {
+            packageCount: 10,
+            totalCost: 15.99, 
+          },
+        ],
+      },  
+    ],
     photo: '/img/products/wieszak_na_klucze_retro.png',
     weight: '0,5kg',
     height: '15cm',
@@ -118,6 +474,58 @@ const products = [
     description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.',
     price: 149,
     completion: '1-2 tygodnie plus czas dostawy',
+    orderOptions: [
+      {
+        type: 'Kurier',
+        possible: true,
+        price: [
+          {
+            packageCount: 1,
+            totalCost: 17.00, 
+          },
+          {
+            packageCount: 2,
+            totalCost: 17.99, 
+          },
+          {
+            packageCount: 5,
+            totalCost: 18.99, 
+          },
+          {
+            packageCount: 10,
+            totalCost: 21.99, 
+          },
+        ],
+      },
+      {
+        type: 'Dostawa osobista',
+        possible: true,
+        price: [
+          {
+            packageCount: 10,
+            totalCost: 15.00,
+          }
+      ]
+      }, 
+      {
+        type: 'Paczkomat Inpost',
+        possible: true,
+        price: [
+          {
+            packageCount: 4,
+            totalCost: 12.99, 
+          },
+          {
+            packageCount: 8,
+            totalCost: 13.99, 
+          },
+          {
+            packageCount: 10,
+            totalCost: 15.99, 
+          },
+        ],
+      },  
+    ],
     photo: '/img/products/wieszak_na_klucze.png',
     weight: '0,5kg',
     height: '15cm',
@@ -134,6 +542,59 @@ const products = [
     description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.',
     price: 249,
     completion: '1-3 tygodnie plus czas dostawy',
+    orderOptions: [
+      {
+        type: 'Kurier',
+        possible: true,
+        price: [
+          {
+            packageCount: 1,
+            totalCost: 17.00, 
+          },
+          {
+            packageCount: 2,
+            totalCost: 17.99, 
+          },
+          {
+            packageCount: 5,
+            totalCost: 18.99, 
+          },
+          {
+            packageCount: 10,
+            totalCost: 21.99, 
+          },
+        ],
+      },
+      {
+        type: 'Dostawa osobista',
+        possible: true,
+        price: [
+          {
+            packageCount: 10,
+            totalCost: 15.00,
+          }
+      ]
+      }, 
+      {
+        type: 'Paczkomat Inpost',
+        possible: true,
+        price: [
+          {
+            packageCount: 4,
+            totalCost: 12.99, 
+          },
+          {
+            packageCount: 8,
+            totalCost: 13.99, 
+          },
+          {
+            packageCount: 10,
+            totalCost: 15.99, 
+          },
+        ],
+      }, 
+       
+    ],
     photo: '/img/products/zyrandol_zarowka.png',
     weight: '300g',
     height: '50cm',
@@ -149,7 +610,46 @@ const products = [
     name: 'Żyrandol Mozaika',
     description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.',
     price: 799,
-    completion: 'plus czas dostawy',
+    completion: '3 tygodnie plus czas dostawy',
+    orderOptions: [
+      {
+        type: 'Kurier',
+        possible: true,
+        price: [
+          {
+            packageCount: 1,
+            totalCost: 50.00, 
+          },
+          {
+            packageCount: 2,
+            totalCost: 80.00, 
+          },
+          {
+            packageCount: 5,
+            totalCost: 150.00, 
+          },
+          {
+            packageCount: 10,
+            totalCost: 300.00, 
+          },
+        ],
+      },
+      {
+        type: 'Dostawa osobista',
+        possible: true,
+        price: [
+          {
+            packageCount: 10,
+            totalCost: 15.00,
+          }
+      ]
+      },
+      {
+        type: 'Paczkomat Inpost',
+        possible: false,
+        price: [],
+      },     
+    ],
     photo: '/img/products/zyrandol_mozaika.png',
     weight: '14kg',
     height: '2cm',

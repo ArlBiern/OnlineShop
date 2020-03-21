@@ -20,10 +20,10 @@ class Cart extends React.Component {
     const cartOrder = document.querySelector('.cart_order');
     cartOrder.classList.toggle('order_visible');
     
-    if (e.target.innerText === "PRZEJDŹ DO ZAMÓWIENIA") {
+    if (e.target.innerText === "PRZEJDŹ DO OPCJI ZAMÓWIENIA") {
       e.target.innerText = "UKRYJ OPCJE ZAMÓWIENIA";
     } else {
-      e.target.innerText = "PRZEJDŹ DO ZAMÓWIENIA";
+      e.target.innerText = "PRZEJDŹ DO OPCJI ZAMÓWIENIA";
     }
   }
 
@@ -37,6 +37,16 @@ class Cart extends React.Component {
 
   deleteFromCart = e => {
     this.props.deleteProduct(e.currentTarget.value);
+    
+    const cartOrder = document.querySelector('.cart_order');
+    cartOrder.classList.remove('order_visible');
+
+    const button = document.querySelector('.main_button.goToOrder');
+    if (button.innerText === "UKRYJ OPCJE ZAMÓWIENIA") {
+      button.innerText = "PRZEJDŹ DO OPCJI ZAMÓWIENIA";
+    };
+
+    window.location.reload(false);
   }
 
   renderUserData () {
@@ -101,6 +111,19 @@ class Cart extends React.Component {
     }
   }
 
+  renderOrderOptionsButton() {
+    if (this.props.state.auth.token !== null && this.props.state.cart.items) {
+      if (this.props.state.cart.items.length > 0) {
+        return (
+          <div>
+            <p className="price">Suma: {this.renderSum()}zł</p>
+            <button className="main_button goToOrder" onClick={this.onClickBuy} type="button" aria-label="Przejdź do opcji zamówienia">Przejdź do opcji zamówienia</button>      
+          </div>
+        )
+      }
+    }
+  }
+
   render() {
     return (
       <div className="container cart">
@@ -114,10 +137,7 @@ class Cart extends React.Component {
             <ul>
               {this.renderProductList()}
             </ul>
-            <div>
-              <p className="price">Suma: {this.renderSum()}zł</p>
-              <button className="main_button" onClick={this.onClickBuy} type="button" aria-label="Przejdź do zamówienia">Przejdź do zamówienia</button>
-            </div>
+            {this.renderOrderOptionsButton()}
           </div>
         </div>
         {this.renderDelivery()}

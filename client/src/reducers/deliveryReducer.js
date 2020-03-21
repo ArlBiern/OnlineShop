@@ -10,7 +10,12 @@ const initialState = {
     email: '',
     phone: ''
   }, 
-  paymentMethod: 'Przelew internetowy'
+  paymentMethod: 'Przelew internetowy',
+  deliveryPrices: {
+    'Kurier': 0,
+    'Dostawa osobista': 0, 
+    'Paczkomat Inpost': 0
+  }
 }
 
 
