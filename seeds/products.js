@@ -30,7 +30,7 @@ const products = [
         ],
       },
       {
-        type: 'Dostawa osobista',
+        type: 'Dostawa Warszawa',
         possible: true,
         price: [
           {
@@ -86,7 +86,7 @@ const products = [
         ],
       },
       {
-        type: 'Dostawa osobista',
+        type: 'Dostawa Warszawa',
         possible: true,
         price: [
           {
@@ -146,7 +146,7 @@ const products = [
         ],
       },
       {
-        type: 'Dostawa osobista',
+        type: 'Dostawa Warszawa',
         possible: true,
         price: [
           {
@@ -214,7 +214,7 @@ const products = [
         ],
       },
       {
-        type: 'Dostawa osobista',
+        type: 'Dostawa Warszawa',
         possible: true,
         price: [
           {
@@ -274,7 +274,7 @@ const products = [
         ],
       },
       {
-        type: 'Dostawa osobista',
+        type: 'Dostawa Warszawa',
         possible: true,
         price: [
           {
@@ -334,7 +334,7 @@ const products = [
         ],
       },
       {
-        type: 'Dostawa osobista',
+        type: 'Dostawa Warszawa',
         possible: true,
         price: [
           {
@@ -430,7 +430,7 @@ const products = [
         ],
       },
       {
-        type: 'Dostawa osobista',
+        type: 'Dostawa Warszawa',
         possible: true,
         price: [
           {
@@ -498,7 +498,7 @@ const products = [
         ],
       },
       {
-        type: 'Dostawa osobista',
+        type: 'Dostawa Warszawa',
         possible: true,
         price: [
           {
@@ -566,7 +566,7 @@ const products = [
         ],
       },
       {
-        type: 'Dostawa osobista',
+        type: 'Dostawa Warszawa',
         possible: true,
         price: [
           {
@@ -635,7 +635,7 @@ const products = [
         ],
       },
       {
-        type: 'Dostawa osobista',
+        type: 'Dostawa Warszawa',
         possible: true,
         price: [
           {

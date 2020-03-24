@@ -2,17 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchCart, deleteProduct, changeProductQuantity } from '../../actions/cartActions';
+import { setDelivery } from '../../actions/deliveryActions';
 import '../../styles/Cart.css';
 import Delivery from './cartComponents/Delivery';
 import Payment from './cartComponents/Payment';
 import OrderSummary from './cartComponents/OrderSummary';
 
+
 class Cart extends React.Component {
   componentDidUpdate(prevProps) {
-    if (this.props.state.auth.isAuthenticated) {
-      if (this.props.state.cart.length === 0) {
-       this.props.fetchCart();
-      }
+    if (this.props.auth.isAuthenticated && this.props.cartData.length === 0) {
+      this.props.fetchCart();
     }
   }
 
@@ -32,6 +32,16 @@ class Cart extends React.Component {
     const product_id = e.currentTarget.dataset.id;
     if (quantity !== 0 && product_id) {
       this.props.changeProductQuantity(product_id, quantity);
+      this.props.setDelivery({
+        delivery_method: '',
+        name: `${this.props.cart.user.name} ${this.props.cart.user.surname}`,
+        address: this.props.cart.user.address,
+        postal_code: this.props.cart.user.postal_code,
+        city: this.props.cart.user.city, 
+        email: this.props.cart.user.email,
+        phone: this.props.cart.user.phone,
+        totalPrice: 0,
+      });
     }
   }
 
@@ -50,8 +60,8 @@ class Cart extends React.Component {
   }
 
   renderUserData () {
-    const user = this.props.state.cart.user;
-    if (this.props.state.cart.length !== 0 && this.props.state.auth.isAuthenticated) {
+    if (this.props.cartData.length !== 0 && this.props.auth.isAuthenticated) {
+      const user = this.props.cart.user;
       return (
         <ul>
           <li>{user.name} {user.surname}</li>
@@ -66,60 +76,53 @@ class Cart extends React.Component {
     return <p>W oczekiwaniu na dane</p>;
   }
 
-  renderSum() {
-    let sum = 0;
-    const cart = this.props.state.cart;
-    if (cart.length !== 0 && cart.items && cart.items.length !== 0 && this.props.state.auth.isAuthenticated) {
-      cart.items.map(product => {
-        return sum += (product.quantity * product.product.price);
-      });
-    } else {
-      sum = 0;
-    }
-    return sum;
-  }
-
   renderProductList() {
-    const cart = this.props.state.cart;
-    if (cart.length !== 0 && cart.items && cart.items.length !== 0 && this.props.state.auth.isAuthenticated) {
-      return cart.items.map(product => {
-        const total_price = product.quantity * product.product.price;
-        return (
-          <li key={product.product._id}>
-            <span>{product.product.name}</span>
-            <span>ilość: <input onChange={this.changeQuantity} type="number" min="1" max="20" data-id={product.product._id} value={product.quantity} /></span>
-            <span>cena: {total_price}zł</span>
-            <button value={product.product._id} onClick={this.deleteFromCart} type="button" aria-label="Usuń">
-              <img src="/img/trash.png" alt="ikona kosz usuń" />
-            </button>
-          </li>
-        );
-      });
+    const cart = this.props.cart;
+    if (cart) {
+      if (cart.length !== 0 && cart.items && cart.items.length !== 0 && this.props.auth.isAuthenticated) {
+        return cart.items.map(product => {
+          const total_price = product.quantity * product.product.price;
+          return (
+            <li key={product.product._id}>
+              <span>{product.product.name}</span>
+              <span>ilość: <input onChange={this.changeQuantity} type="number" min="1" max="20" data-id={product.product._id} value={product.quantity} /></span>
+              <span>cena: {total_price}zł</span>
+              <button value={product.product._id} onClick={this.deleteFromCart} type="button" aria-label="Usuń">
+                <img src="/img/trash.png" alt="ikona kosz usuń" />
+              </button>
+            </li>
+          );
+        });
+      }
     }
     return <p>W oczekiwaniu na produkty</p>;
   }
 
   renderDelivery() {
-    if (this.props.state.cart.user) {
-      return (
-        <div className="cart_order">
-          <Delivery />
-          <Payment />
-          <OrderSummary />
-        </div>
-      )
+    if (this.props.cart) {
+      if (this.props.cart.user) {
+        return (
+          <div className="cart_order">
+            <Delivery />
+            <Payment />
+            <OrderSummary />
+          </div>
+        )
+      }
     }
   }
 
   renderOrderOptionsButton() {
-    if (this.props.state.auth.token !== null && this.props.state.cart.items) {
-      if (this.props.state.cart.items.length > 0) {
-        return (
-          <div>
-            <p className="price">Suma: {this.renderSum()}zł</p>
-            <button className="main_button goToOrder" onClick={this.onClickBuy} type="button" aria-label="Przejdź do opcji zamówienia">Przejdź do opcji zamówienia</button>      
-          </div>
-        )
+    if(this.props.cart) {
+      if (this.props.auth.token !== null && this.props.cart.items) {
+        if (this.props.cart.items.length > 0) {
+          return (
+            <div>
+              <p className="price">Suma: {this.props.cartData.itemsPrice}zł</p>
+              <button className="main_button goToOrder" onClick={this.onClickBuy} type="button" aria-label="Przejdź do opcji zamówienia">Przejdź do opcji zamówienia</button>      
+            </div>
+          )
+        }
       }
     }
   }
@@ -143,23 +146,23 @@ class Cart extends React.Component {
         {this.renderDelivery()}
       </div>
     );
-  }
+  } 
 }
 
 Cart.propTypes = {
   fetchCart: PropTypes.func.isRequired,
   deleteProduct: PropTypes.func.isRequired,
   changeProductQuantity: PropTypes.func.isRequired,
-  state: PropTypes.objectOf(PropTypes.oneOfType([
-    PropTypes.string.isRequired,
-    PropTypes.array.isRequired,
-    PropTypes.object.isRequired,
-  ])).isRequired,
+  setDelivery: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => {
-  return { state };
+  return { 
+    auth: state.auth,
+    cart: state.cartData.cart,
+    cartData: state.cartData
+  };
 };
 
-
-export default connect(mapStateToProps, { fetchCart, deleteProduct, changeProductQuantity })(Cart);
+export default connect(mapStateToProps, { fetchCart, deleteProduct, changeProductQuantity, setDelivery })(Cart);

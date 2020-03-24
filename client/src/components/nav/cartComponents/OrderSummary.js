@@ -42,15 +42,16 @@ class OrderSummary extends React.Component {
                 <td>Telefon kontaktowy:</td>
                 <td>{this.props.deliveryData.phone}</td>
               </tr>
+              <tr>
+                <td>Całkowity koszt:</td>
+                <td>{this.props.totalPrice.toFixed(2)} zł</td>
+              </tr>
             </tbody>
           </table>
         </div>
-        <div className="summary_price">
-          <h4>Całkowity koszt</h4>
-        </div> 
-        <div className="summary_button">
+        <div className="summary_orderButton">
           <button className="main_button" onClick={this.onClickBuy} type="button" aria-label="Przejdź do zamówienia">Zamawiam</button>
-        </div>
+        </div> 
       </div>
     )
   }
@@ -58,7 +59,8 @@ class OrderSummary extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    deliveryData: state.order.deliveryData
+    deliveryData: state.order.deliveryData,
+    totalPrice: state.order.totalPrice,
   }
 }
 

@@ -11,18 +11,12 @@ class Delivery extends React.Component {
       address: '',
       postal_code: '',
       city: ''
-    }, 
-    deliveryPrices: {
-      'Kurier': 0,
-      'Dostawa osobista': 0, 
-      'Paczkomat Inpost': 0
     }
   }
 
   componentDidUpdate(prevProps) {
     if (this.props !== prevProps) {
       this.displayPossibleDelivery();
-      console.log('component did update')
     }
   }
  
@@ -34,7 +28,8 @@ class Delivery extends React.Component {
         postal_code: this.props.user.postal_code,
         city: this.props.user.city, 
         email: this.props.user.email,
-        phone: this.props.user.phone
+        phone: this.props.user.phone,
+        totalPrice: 0,
       }
     );
 
@@ -102,67 +97,24 @@ class Delivery extends React.Component {
     );
   };
 
-  /* sumDeliveryPrice = (type, possible, priceOptions, quantity) => {
-    let deliveryPrices = {
-      'Kurier': 0,
-      'Dostawa osobista': 0, 
-      'Paczkomat Inpost': 0
-    }
-
-    if (possible) {
-      for (let i = 0; i < priceOptions.length; i++) {
-        if (quantity <= priceOptions[i].packageCount) {
-          deliveryPrices[type] += priceOptions[i].totalCost;
-        }
-      }
-    };
-
-  } */
-
-
   // Render delivery options radio fields and do the price calculation
   renderRadioInput() {
     let allItems = this.props.cart.items;
     const deliveryOptions = {
       'Kurier': true,
-      'Dostawa osobista': true, 
+      'Dostawa Warszawa': true, 
       'Paczkomat Inpost': true
     }
     let notPossible = [];
 
-    // Searching delivery limitations and calculatin the final price
-    let deliveryPrices = {
-      'Kurier': 0,
-      'Dostawa osobista': 0, 
-      'Paczkomat Inpost': 0
-    }
-
-    const sumDeliveryPrice = (type, possible, priceOptions, quantity) => {
-      if (possible) {
-        for (let i = 0; i < priceOptions.length; i++) {
-          if (quantity <= priceOptions[i].packageCount) {
-            deliveryPrices[type] += priceOptions[i].totalCost;
-          }
-        }
-      };
-    }
-
     allItems.forEach(item => {
       item.product.orderOptions.forEach(option => {
-        sumDeliveryPrice(option.type, option.possible, option.price, item.quantity);
         if (option.possible === false ) {
           notPossible.push({product: item.product.name, type: option.type});
           deliveryOptions[`${option.type}`] = false;
         }
       });
     });
-    
-    /* this.setState({
-      ...this.state, 
-      deliveryPrices: deliveryPrices
-    }); */
-
-    console.log(deliveryPrices);
 
     return (
       <div className="delivery_radio">
@@ -175,7 +127,7 @@ class Delivery extends React.Component {
             disabled={!deliveryOptions['Kurier']}/>
             <div className="deliveryDescription">
               <span>Dostawa kurierem</span> 
-              <span className="deliveryPrice">{this.state.deliveryPrices['Kurier'].toFixed(2)} zł</span>
+              <span className="deliveryPrice">{this.props.deliveryPrices['Kurier'].toFixed(2)} zł</span>
             </div>  
         </label>
         <label>
@@ -183,8 +135,8 @@ class Delivery extends React.Component {
             name="delivery_method" 
             component={this.renderInput} 
             type="radio" 
-            value="Dostawa osobista"
-            disabled={!deliveryOptions['Dostawa osobista']}/> 
+            value="Dostawa Warszawa"
+            disabled={!deliveryOptions['Dostawa Warszawa']}/> 
             <div className="deliveryDescription">
               <span>Dostawa Warszawa</span>
               <span className="deliveryPrice">15.00 zł</span>
@@ -199,7 +151,7 @@ class Delivery extends React.Component {
             disabled={!deliveryOptions['Paczkomat Inpost']}/>
             <div className="deliveryDescription">
               <span>Paczkomat inpost</span> 
-              <span className="deliveryPrice">{this.state.deliveryPrices['Paczkomat Inpost'].toFixed(2)} zł</span>
+              <span className="deliveryPrice">{this.props.deliveryPrices['Paczkomat Inpost'].toFixed(2)} zł</span>
             </div>
         </label>
       </div>
@@ -238,13 +190,23 @@ class Delivery extends React.Component {
           postal_code: this.state.inpostAddress.postal_code,
           city: this.state.inpostAddress.city, 
           email: formValues.email,
-          phone: formValues.phone
+          phone: formValues.phone,
+          totalPrice: (this.props.deliveryPrices[formValues.delivery_method] + this.props.itemsPrice),
         });
       }
-    } else if (formValues.delivery_method === 'Dostawa osobista' && formValues.city.toUpperCase() !== 'WARSZAWA' ) {
+    } else if (formValues.delivery_method === 'Dostawa Warszawa' && formValues.city.toUpperCase() !== 'WARSZAWA' ) {
       alert('Ta opcja dostawy jest możliwa tylko w Warszawie')
     } else {
-      this.props.setDelivery(formValues);
+      this.props.setDelivery({
+        delivery_method: formValues.delivery_method,
+        name: formValues.name,
+        address: formValues.address,
+        postal_code: formValues.postal_code,
+        city: formValues.city, 
+        email: formValues.email,
+        phone: formValues.phone,
+        totalPrice: (this.props.deliveryPrices[formValues.delivery_method] + this.props.itemsPrice)
+      });
     }
   }
 
@@ -260,7 +222,8 @@ class Delivery extends React.Component {
             <form 
               onSubmit={this.props.handleSubmit(this.onSubmit)} 
               className="user_form"
-            >
+              >
+              <div>Sposób i dane dostawy</div> 
               {this.renderRadioInput()}
               <div className="inpost_container">
                 <div id="easypack-map"></div>
@@ -388,15 +351,17 @@ const validate = formValues => {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.cart.user,
-    cart: state.cart,
+    user: state.cartData.cart.user,
+    cart: state.cartData.cart,
+    itemsPrice: state.cartData.itemsPrice,
+    deliveryPrices: state.cartData.deliveryPrices,
     initialValues: {
-      name: `${state.cart.user.name} ${state.cart.user.surname}`, 
-      address: state.cart.user.address,
-      postal_code: state.cart.user.postal_code,
-      city: state.cart.user.city,
-      email: state.cart.user.email,
-      phone: state.cart.user.phone 
+      name: `${state.cartData.cart.user.name} ${state.cartData.cart.user.surname}`, 
+      address: state.cartData.cart.user.address,
+      postal_code: state.cartData.cart.user.postal_code,
+      city: state.cartData.cart.user.city,
+      email: state.cartData.cart.user.email,
+      phone: state.cartData.cart.user.phone 
     }
   };
 };

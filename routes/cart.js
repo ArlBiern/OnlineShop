@@ -9,11 +9,44 @@ router.get('/', auth, async (req, res) => {
   const cart = await Cart.findOne({ user: req.user._id }).populate({ path: 'user', select: 'name surname address postal_code city phone email' }).populate({ path: 'items.product', select: 'name price orderOptions' });
   if (!cart) return res.status(404).json({ msg: 'Szukany koszyk nie istnieje' });
 
-  /* let newCart = [...cart];
-  newCart["test"] = "aaaa";
-  console.log(newCart); */
+  // Calculating delivery price and items price
+  let allItems = cart.items;
+  let itemsPrice = 0;
 
-  return res.status(200).send(cart);
+  const deliveryPrices = {
+    'Kurier': 0,
+    'Dostawa Warszawa': 0, 
+    'Paczkomat Inpost': 0
+  }
+
+  const sumDeliveryPrice = (type, possible, priceOptions, quantity) => {
+    if (possible) {
+      for (let i = 0; i < priceOptions.length; i++) {
+        if (quantity <= priceOptions[i].packageCount) {
+          deliveryPrices[type] += priceOptions[i].totalCost;
+          break;
+        }
+      }
+    };
+  } 
+
+  allItems.forEach(item => {
+    itemsPrice += (item.quantity * item.product.price);
+
+    item.product.orderOptions.forEach(option => {
+      if (option.type === "Dostawa Warszawa") {
+        deliveryPrices[option.type] = 15;
+      } else {
+        sumDeliveryPrice(option.type, option.possible, option.price, item.quantity);
+      }
+    });
+  });
+
+  return res.status(200).send({
+    cart: cart, 
+    deliveryPrices: deliveryPrices,
+    itemsPrice: itemsPrice
+  });
 });
 
 // Create cart

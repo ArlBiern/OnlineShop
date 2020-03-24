@@ -17,6 +17,6 @@ export default combineReducers({
   auth: authReducer,
   services: servicesReducer,
   contact: contactReducer,
-  cart: cartReducer,
+  cartData: cartReducer,
   order: deliveryReducer
 });

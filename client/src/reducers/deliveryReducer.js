@@ -8,14 +8,10 @@ const initialState = {
     postal_code: '',
     city: '', 
     email: '',
-    phone: ''
+    phone: '', 
   }, 
   paymentMethod: 'Przelew internetowy',
-  deliveryPrices: {
-    'Kurier': 0,
-    'Dostawa osobista': 0, 
-    'Paczkomat Inpost': 0
-  }
+  totalPrice: 0,
 }
 
 
@@ -31,8 +27,9 @@ export default (state = initialState, action) => {
           postal_code: action.data.postal_code,
           city: action.data.city,
           email: action.data.email,
-          phone: action.data.phone 
-        }
+          phone: action.data.phone, 
+        }, 
+        totalPrice: action.data.totalPrice
       }
     default:
       return state;
