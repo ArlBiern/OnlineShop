@@ -1,17 +1,21 @@
 window.addEventListener('DOMContentLoaded', () => {  
   const checkInpostContainer = () => {
-    console.log('inpost check')
     let inpostContainer = document.querySelector('.inpost_container');
     if (inpostContainer !== null) {
-      console.log('inpost active')
-      window.easyPackAsyncInit = function () {
-        easyPack.init({});
-        var map = easyPack.mapWidget('easypack-map', function(point){ });
-      };
-      clearInterval(inpostInterval);
+      let easypackCnt = inpostContainer.querySelector('.easypack-widget');
+      if (easypackCnt === null) {
+        if (window.easyPackAsyncInit instanceof Function) {
+          easyPackAsyncInit();
+        } else {
+          window.easyPackAsyncInit = function () {
+            easyPack.init({});
+            easyPack.mapWidget('easypack-map', function(point){ });
+          };
+        }
+        easypackCnt = inpostContainer.querySelector('.easypack-widget');
+      }
     }
   }
   
   let inpostInterval = setInterval(checkInpostContainer, 3000);
-
 });

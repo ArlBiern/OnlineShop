@@ -35,7 +35,6 @@ class Delivery extends React.Component {
 
     this.inpostRadioSelection();
     this.inpostMapSelection();
-    ///this.displayPossibleDelivery()
   };
 
   // Save to props address of chosen "paczkomat"
@@ -208,10 +207,12 @@ class Delivery extends React.Component {
         totalPrice: (this.props.deliveryPrices[formValues.delivery_method] + this.props.itemsPrice)
       });
     }
+
+    const orderSummary = document.querySelector('.order_summary');
+    orderSummary.classList.add('summary_visible');
   }
 
   render () {
-    console.log('delivery renders');
     return (
       <div className="order_address">
         <h3>Adres dostawy</h3> 
@@ -281,7 +282,7 @@ class Delivery extends React.Component {
               </div>
               <div>
                 <button type="submit" className="main_button">
-                  Zatwierdź wybór 
+                  Zatwierdź wybór dostawy
                 </button>
               </div>
             </form>
@@ -302,8 +303,8 @@ const validate = formValues => {
     errors.name = 'Proszę wprowadź swoje imię oraz nazwisko';
   } else if (formValues.name.length < 2) {
     errors.name = 'Dane powinno być dłuższe niż 4 znaki';
-  } else if (formValues.name.length > 20) {
-    errors.name = 'Dane powinny być krótsze niż 60 znaków';
+  } else if (formValues.name.length > 70) {
+    errors.name = 'Dane powinny być krótsze niż 70 znaków';
   }
 
   if (!formValues.address) {

@@ -18,5 +18,5 @@ export default combineReducers({
   services: servicesReducer,
   contact: contactReducer,
   cartData: cartReducer,
-  order: deliveryReducer
+  delivery: deliveryReducer
 });

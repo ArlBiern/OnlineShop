@@ -8,7 +8,6 @@ import Delivery from './cartComponents/Delivery';
 import Payment from './cartComponents/Payment';
 import OrderSummary from './cartComponents/OrderSummary';
 
-
 class Cart extends React.Component {
   componentDidUpdate(prevProps) {
     if (this.props.auth.isAuthenticated && this.props.cartData.length === 0) {
@@ -43,6 +42,9 @@ class Cart extends React.Component {
         totalPrice: 0,
       });
     }
+
+    const orderSummary = document.querySelector('.order_summary');
+    orderSummary.classList.remove('summary_visible');
   }
 
   deleteFromCart = e => {
@@ -129,7 +131,7 @@ class Cart extends React.Component {
 
   render() {
     return (
-      <div className="container cart">
+      <div className="container cart" data-active="inactive">
         <div className="cart_mainView">
           <div className="user_data">
             <h3>Twoje dane</h3>

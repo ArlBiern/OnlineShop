@@ -106,6 +106,11 @@ router.post('/', auth, async (req, res) => {
   return res.status(200).send(cart);
 });
 
+router.delete('/:id', async (req, res) => {
+  //let cart = await Cart.findOne({ "cart._id": req.body.id})
+  console.log(req.params.id);
+})
+
 // Increase and decrease quantity
 router.put('/quantity', auth, async (req, res) => {
   let cart = await Cart.findOne({ user: req.user._id });
