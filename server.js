@@ -18,6 +18,7 @@ const products = require('./routes/product');
 const cart = require('./routes/cart');
 const contact = require('./routes/contact');
 const error = require('./middleware/error');
+const order = require('./routes/order');
 
 // Basic handling exceptions and promise rejections
 process.on('uncaughtException', (ex) => {
@@ -44,10 +45,11 @@ mongoose.connect(connectionString, {
     dbDebug('Could not connect to MongoDB.', err.message);
   });
 
+
 if (app.get('env') === 'development') {
   app.use(morgan('tiny'));
   basicDebug('Morgan enabled...');
-}
+} 
 
 // Seed products in databease
 // const seedProducts = require('./seeds/products');
@@ -65,6 +67,7 @@ app.use('/login/user', login);
 app.use('/products', products);
 app.use('/cart', cart);
 app.use('/contact', contact);
+app.use('/order', order);
 
 app.use(error);
 

@@ -6,10 +6,47 @@ const router = express.Router();
 
 // Get cart
 router.get('/', auth, async (req, res) => {
-  const cart = await Cart.findOne({ user: req.user._id }).populate({ path: 'user', select: 'name surname address postal_code city phone email' }).populate({ path: 'items.product', select: 'name price' });
+  const cart = await Cart.findOne({ user: req.user._id }).populate({ path: 'user', select: 'name surname address postal_code city phone email' }).populate({ path: 'items.product', select: 'name price orderOptions' });
   if (!cart) return res.status(404).json({ msg: 'Szukany koszyk nie istnieje' });
 
-  return res.status(200).send(cart);
+  // Calculating delivery price and items price
+  let allItems = cart.items;
+  let itemsPrice = 0;
+
+  const deliveryPrices = {
+    'Kurier': 0,
+    'Dostawa Warszawa': 0, 
+    'Paczkomat Inpost': 0
+  }
+
+  const sumDeliveryPrice = (type, possible, priceOptions, quantity) => {
+    if (possible) {
+      for (let i = 0; i < priceOptions.length; i++) {
+        if (quantity <= priceOptions[i].packageCount) {
+          deliveryPrices[type] += priceOptions[i].totalCost;
+          break;
+        }
+      }
+    };
+  } 
+
+  allItems.forEach(item => {
+    itemsPrice += (item.quantity * item.product.price);
+
+    item.product.orderOptions.forEach(option => {
+      if (option.type === "Dostawa Warszawa") {
+        deliveryPrices[option.type] = 15;
+      } else {
+        sumDeliveryPrice(option.type, option.possible, option.price, item.quantity);
+      }
+    });
+  });
+
+  return res.status(200).send({
+    cart: cart, 
+    deliveryPrices: deliveryPrices,
+    itemsPrice: itemsPrice
+  });
 });
 
 // Create cart
@@ -68,6 +105,22 @@ router.post('/', auth, async (req, res) => {
 
   return res.status(200).send(cart);
 });
+
+router.delete('/:id', auth, async (req, res) => {
+  //await Cart.findByIdAndRemove(req.params.id);
+  //if (!cart) return res.status(400).json({msg: 'Wystąpił błąd podczas usuwania Twojego koszyka'});
+
+  /* await Cart.deleteOne({"cart.id" : req.params.id}, function (err) {
+    if (err) {
+      return res.status(400).json({msg: 'Wystąpił błąd podczas usuwania Twojego koszyka'})
+    }
+  }) */
+  let cart = await Cart.findById(req.params.id);
+  if (!cart) return res.status(404).json({ msg: 'Wystąpił błąd w usunięciu Twojego koszyka, ale zamówienia przesłano do realizacji' });
+
+  await cart.delete();
+  return res.status(200).send({ cartDeleted: true });
+})
 
 // Increase and decrease quantity
 router.put('/quantity', auth, async (req, res) => {

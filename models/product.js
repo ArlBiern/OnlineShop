@@ -22,6 +22,10 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  orderOptions: {
+    type: Array,
+    required: true,
+  },
   photo: {
     type: String,
     required: true,
@@ -45,6 +49,7 @@ function validateProduct(product) {
     description: Joi.string().min(20).max(500).required(),
     price: Joi.number().required(),
     completion: Joi.string().required(),
+    orderOptions: Joi.array().required(),
     photo: Joi.string().required(),
     weight: Joi.string(),
     height: Joi.string(),
