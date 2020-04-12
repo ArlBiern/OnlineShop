@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchCart, deleteProduct, changeProductQuantity } from '../../actions/cartActions';
 import { setDelivery } from '../../actions/deliveryActions';
+import { deleteOrderStatus } from '../../actions/orderActions';
 import '../../styles/Cart.css';
 import Delivery from './cartComponents/Delivery';
 import Payment from './cartComponents/Payment';
@@ -13,6 +14,22 @@ class Cart extends React.Component {
     if (this.props.auth.isAuthenticated && this.props.cartData.length === 0) {
       this.props.fetchCart();
     }
+    //this.handleOrderInfoModal();
+  }
+
+  /* handleOrderInfoModal = () => {
+    if (this.props.orderStatus.didOrderSave && this.props.cartData.cartDeleted) {
+      const app = document.querySelector('#root');
+      const modal = document.querySelector('div#order_status_cnt');
+
+      app.style.opacity = "0.2";
+      modal.style.opacity = "1";
+      modal.style.color = "red";
+    }
+  } */
+
+  resetOrderStatus = () => {
+    this.props.deleteOrderStatus();
   }
 
   onClickBuy(e) {
@@ -62,8 +79,8 @@ class Cart extends React.Component {
   }
 
   renderUserData () {
-    if (this.props.cartData.length !== 0 && this.props.auth.isAuthenticated) {
-      const user = this.props.cart.user;
+    if (this.props.auth.isAuthenticated) {
+      const user = this.props.auth.user;
       return (
         <ul>
           <li>{user.name} {user.surname}</li>
@@ -97,7 +114,21 @@ class Cart extends React.Component {
         });
       }
     }
+
     return <p>W oczekiwaniu na produkty</p>;
+  }
+
+  renderOrderStatusInfo() {
+    if (this.props.orderStatus.didOrderSave && this.props.cartData.cartDeleted) {
+      return (
+        <div id="order_status_cnt" className="order_status_cnt">
+          <div className="order_status_info">
+            <p>Twoje zamówienie zostało przesłane do realizacji</p>
+            <button className="main_button" onClick={this.resetOrderStatus} type="button" aria-label="Zamknij okno">Zamknij okno</button>
+          </div>
+        </div>
+      )
+    }
   }
 
   renderDelivery() {
@@ -132,6 +163,7 @@ class Cart extends React.Component {
   render() {
     return (
       <div className="container cart" data-active="inactive">
+        {this.renderOrderStatusInfo()}
         <div className="cart_mainView">
           <div className="user_data">
             <h3>Twoje dane</h3>
@@ -159,12 +191,13 @@ Cart.propTypes = {
   auth: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return { 
     auth: state.auth,
     cart: state.cartData.cart,
-    cartData: state.cartData
+    cartData: state.cartData,
+    orderStatus: state.orderStatus
   };
 };
 
-export default connect(mapStateToProps, { fetchCart, deleteProduct, changeProductQuantity, setDelivery })(Cart);
+export default connect(mapStateToProps, { fetchCart, deleteProduct, changeProductQuantity, setDelivery, deleteOrderStatus })(Cart);

@@ -106,9 +106,20 @@ router.post('/', auth, async (req, res) => {
   return res.status(200).send(cart);
 });
 
-router.delete('/:id', async (req, res) => {
-  //let cart = await Cart.findOne({ "cart._id": req.body.id})
-  console.log(req.params.id);
+router.delete('/:id', auth, async (req, res) => {
+  //await Cart.findByIdAndRemove(req.params.id);
+  //if (!cart) return res.status(400).json({msg: 'Wystąpił błąd podczas usuwania Twojego koszyka'});
+
+  /* await Cart.deleteOne({"cart.id" : req.params.id}, function (err) {
+    if (err) {
+      return res.status(400).json({msg: 'Wystąpił błąd podczas usuwania Twojego koszyka'})
+    }
+  }) */
+  let cart = await Cart.findById(req.params.id);
+  if (!cart) return res.status(404).json({ msg: 'Wystąpił błąd w usunięciu Twojego koszyka, ale zamówienia przesłano do realizacji' });
+
+  await cart.delete();
+  return res.status(200).send({ cartDeleted: true });
 })
 
 // Increase and decrease quantity

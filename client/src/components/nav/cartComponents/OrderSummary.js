@@ -12,6 +12,9 @@ class OrderSummary extends React.Component {
       if (this.props.appErrors.id === 'ORDER_SAVE_FAIL') {
         this.setState({ alertMsg: this.props.appErrors.msg.msg });
       }
+      if (this.props.appErrors.id === 'DELETE_CART_ERROR') {
+        this.setState({ alertMsg: 'Nie udało sie usunać koszyka, jednak zamówienie zostało przesłane do realizacji' });
+      }
     }
   }
 
@@ -27,25 +30,27 @@ class OrderSummary extends React.Component {
       })
     });
 
-    this.props.saveOrder({
-      cart: {
-        items: products,
-        itemsPrice: this.props.cartData.itemsPrice,
-      }, 
-      deliveryData: {
-        delivery_method: this.props.deliveryData.delivery_method, 
-        name: this.props.deliveryData.name, 
-        address: this.props.deliveryData.address, 
-        postal_code: this.props.deliveryData.postal_code, 
-        city: this.props.deliveryData.city,
-        email: this.props.deliveryData.email,  
-        phone: this.props.deliveryData.phone,  
-      }, 
-      paymentMethod: this.props.delivery.paymentMethod,  
-      totalPrice: this.props.delivery.totalPrice,  
-    });
-    console.log(this.props.cartData.cart._id)
-    this.props.deleteCart(this.props.cartData.cart._id);
+    this.props.saveOrder(
+      {
+        cart: {
+          items: products,
+          itemsPrice: this.props.cartData.itemsPrice,
+        }, 
+        deliveryData: {
+          delivery_method: this.props.deliveryData.delivery_method, 
+          name: this.props.deliveryData.name, 
+          address: this.props.deliveryData.address, 
+          postal_code: this.props.deliveryData.postal_code, 
+          city: this.props.deliveryData.city,
+          email: this.props.deliveryData.email,  
+          phone: this.props.deliveryData.phone,  
+        }, 
+        paymentMethod: this.props.delivery.paymentMethod,  
+        totalPrice: this.props.delivery.totalPrice, 
+      },
+      this.props.cartData.cart._id
+      //'1234qeqwewqrq'
+    );
   }
 
   render() {
@@ -92,7 +97,7 @@ class OrderSummary extends React.Component {
             </table>
           </div>
           <div className="summary_orderButton">
-            <button className="main_button" onClick={this.onClickBuy} type="button" aria-label="Przejdź do zamówienia">Zamawiam</button>
+            <button className="main_button" onClick={this.onClickBuy} type="button" aria-label="Zamawiam">Zamawiam</button>
           </div> 
         </div>
         <div>

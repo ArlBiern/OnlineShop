@@ -45,10 +45,11 @@ mongoose.connect(connectionString, {
     dbDebug('Could not connect to MongoDB.', err.message);
   });
 
+
 if (app.get('env') === 'development') {
   app.use(morgan('tiny'));
   basicDebug('Morgan enabled...');
-}
+} 
 
 // Seed products in databease
 // const seedProducts = require('./seeds/products');

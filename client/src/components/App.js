@@ -63,8 +63,8 @@ App.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  state,
+const mapStateToProps = (state, ownProps) => ({
+  state
 });
 
 export default connect(mapStateToProps)(App);

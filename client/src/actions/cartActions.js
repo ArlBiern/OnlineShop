@@ -11,17 +11,20 @@ export const fetchCart = () => async (dispatch, getState) => {
 export const deleteCart = cart_id => (dispatch, getState) => {
   streams
     .delete(`/cart/${cart_id}`, tokenConfig(getState))
-    .then(res => dispatch({
-      type: DELETE_CART
-    }))
-    /* .catch(err => {
-      if (err) {
-        dispatch(returnErrors(err.response.data.msg, err.response.status));
-        dispatch({
-          type: AUTH_ERROR,
-        });
+    .then(res => {
+      dispatch({
+        type: DELETE_CART, 
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      if (err.response) {
+        dispatch(returnErrors(err.response.data.msg, err.response.status, 'DELETE_CART_ERROR'));
+        /* dispatch({
+          type: DELETE_CART_ERROR,
+        }); */
       } 
-    }) */
+    })
 };
 
 export const addProduct = product_id => (dispatch, getState) => {

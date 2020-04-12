@@ -8,6 +8,7 @@ import servicesReducer from './servicesReducer';
 import contactReducer from './contactReducer';
 import cartReducer from './cartReducer';
 import deliveryReducer from './deliveryReducer';
+import orderReducer from './orderReducer';
 
 export default combineReducers({
   form: formReducer,
@@ -18,5 +19,6 @@ export default combineReducers({
   services: servicesReducer,
   contact: contactReducer,
   cartData: cartReducer,
-  delivery: deliveryReducer
+  delivery: deliveryReducer, 
+  orderStatus: orderReducer
 });

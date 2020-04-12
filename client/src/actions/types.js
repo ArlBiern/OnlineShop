@@ -25,8 +25,10 @@ export const EMAIL_FAIL = 'EMAIL_FAIL';
 export const FETCH_CART = 'FETCH_CART';
 export const SET_DELIVERY = 'SET_DELIVERY';
 export const DELETE_CART = 'DELETE_CART';
+export const DELETE_CART_ERROR = 'DELETE_CART_ERROR';
 
 // Order
 export const SAVE_ORDER_SUCCESS = 'SAVE_ORDER_SUCCESS';
 export const GET_ORDERS = 'GET_ORDERS';
 export const SAVE_ORDER_FAIL = 'SAVE_ORDER_FAIL';
+export const DELETE_ORDER_STATUS = 'DELETE_ORDER_STATUS';

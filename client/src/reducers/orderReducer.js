@@ -1,7 +1,7 @@
 import { 
   SAVE_ORDER_SUCCESS, 
-  GET_ORDERS, 
-  SAVE_ORDER_FAIL
+  SAVE_ORDER_FAIL,
+  DELETE_ORDER_STATUS
 } from '../actions/types';
 
 const initialState = {
@@ -17,12 +17,21 @@ export default function (state = initialState, action) {
         ...state, 
         didOrderTryToSave: true, 
         didOrderSave: true,
+        didOrderFailToSave: false,
       };
     case SAVE_ORDER_FAIL:
       return {
         ...state, 
         didOrderTryToSave: true, 
         didOrderSave: false,
+        didOrderFailToSave: true,
+      }
+    case DELETE_ORDER_STATUS:
+      return {
+        ...state, 
+        didOrderTryToSave: false, 
+        didOrderSave: false,
+        didOrderFailToSave: false,
       }
     default: 
       return state;
