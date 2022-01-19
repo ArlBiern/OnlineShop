@@ -78,7 +78,7 @@ npm run dev
 
 ## :busts_in_silhouette: Authors
 * **freefrogs** - check at [Github](https://github.com/freefrogs)
-* **Kombajn27** - check at [Github](https://github.com/Kombajn27)
+* **ArlBiern** - check at [Github](https://github.com/ArlBiern)
 
 ## :notebook: To improve
 * There are always some bugs to improve ;) Minor issues will be improved in the near future. 
