@@ -2,7 +2,7 @@
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000)
 ![Status: In progress](https://img.shields.io/badge/status-in%20progress-blueViolet)
 
-**Check demo** at :sparkles: [Heroku](https://thinktree-e-shop.herokuapp.com/) and **source code** at :house: [GitHub project homepage](https://github.com/Kombajn27/OnlineShop)
+**Check demo** at :sparkles: [Heroku](https://thinktree-e-shop.herokuapp.com/) and **source code** at :house: [GitHub project homepage](https://github.com/ArlBiern/OnlineShop)
 
 This app was created as a part of the CodersCamp project (2019, Warsaw group) - fifth project - React and Redux (usage in web applications).
 
@@ -17,7 +17,7 @@ To run project on your local machine for development and testing purposes you ne
 ### Install & usage (bash)
 1. Clone repository 
 ```
-git@github.com:Kombajn27/OnlineShop.git
+git@github.com:ArlBiern/OnlineShop.git
 ```
 2. Install required project dependencies for front-end and back-end
 ```
