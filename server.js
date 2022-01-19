@@ -34,7 +34,7 @@ winston.add(new winston.transports.File({
   handleExceptions: true,
 }));
 
-const connectionString = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_DATABASE_ADDRESS}/${process.env.DB_DATABASE_NAME}`;
+const connectionString = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_DATABASE_ADDRESS}/${process.env.DB_DATABASE_NAME}`;
 mongoose.connect(connectionString, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
