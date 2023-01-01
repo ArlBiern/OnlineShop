@@ -28,7 +28,7 @@
     "@hapi/joi": "^16.1.8",
     "bcryptjs": "^2.4.3",
     "concurrently": "^5.0.2",
-    "config": "^3.2.4",
+    "config": "^3.3.8",
     "cors": "^2.8.5",
     "debug": "^4.1.1",
     "dotenv": "^8.2.0",
